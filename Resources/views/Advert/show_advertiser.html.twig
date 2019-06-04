@@ -1,0 +1,31 @@
+{% trans_default_domain 'advert' %}
+
+<div class="uk-modal-dialog">
+    <div class="uk-modal-header">
+        <h3>{{ "advert.advertiser.update.title"|trans }}</h3>
+    </div>
+    <div class="uk-modal-body">
+        <div class="uk-margin-bottom">
+            <label class="uk-text-bold">{{ 'advert.advertiser.show.name'|trans }} : </label>
+            <span>{{ advertiser.name }}</span>
+        </div>
+        <div class="uk-margin-bottom">
+            <label class="uk-text-bold">{{ 'advert.advertiser.show.created_at'|trans }} : </label>
+            <span>{{ date_time_ago(advertiser.createdAt) }}</span>
+        </div>
+        <div class="uk-margin-bottom">
+            <label class="uk-text-bold">{{ 'advert.advertiser.show.updated_at'|trans }} : </label>
+            <span>{{ date_time_ago(advertiser.updatedAt) }}</span>
+        </div>
+        <div>
+            <label class="uk-text-bold">{{ 'advert.advertiser.show.description'|trans }} : </label>
+            <span>{{ advertiser.description }}</span>
+        </div>
+    </div>
+    <div class="uk-modal-footer uk-text-right">
+        <button type="button" class="md-btn md-btn-flat uk-modal-close">{{ "advert.advertiser.show.cancel"|trans }}</button>
+        <a href="#" data-route="{{ url('puzzle_admin_advert_advertiser_delete', {'id' : advertiser.id}) }}" data-title="{{ 'advert.advertiser.delete.title' }}" data-text="{{ 'advert.advertiser.delete.description'|trans({'%advertiserName%': advertiser.name }) }}" data-label="{{ advertiser.name }}" class="remove-item md-btn md-btn-danger">
+            {{ "advert.advertiser.list.delete"|trans }}
+        </a>
+    </div>
+</div>

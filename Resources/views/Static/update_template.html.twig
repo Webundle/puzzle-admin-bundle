@@ -1,0 +1,29 @@
+{% trans_default_domain 'static' %}
+
+{% extends 'AdminBundle:Static:layout.html.twig' %}
+
+{% block title %}{{ parent() }} - {{ "static.template.update.title"|trans }} {{ template.name }} {% endblock %}
+
+{% block breadcrumbmodule %}
+    {{ parent() }}
+    <a href="{{ url('puzzle_admin_static_template_list') }}">{{ "static.template.list.title"|trans|capitalize }}</a>
+    <i class="fa fa-chevron-right"></i>
+    <em>{{ "static.template.update.title"|trans|capitalize }}</em>
+{% endblock %}
+
+{% block content %}
+    <div id="page_content_inner">
+        {% include 'AdminBundle:Static:form_template.html.twig' with {'form': form, 'template': template} %}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+	{% javascripts
+        'bundles/admin/js/uikit_htmleditor_custom.js'
+
+        output="compiled/js/puzzle_admin_template_update.min.js" 
+        %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}

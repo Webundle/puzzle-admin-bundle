@@ -1,0 +1,53 @@
+{% trans_default_domain 'media' %}
+
+<div class="uk-modal-dialog">
+    <div class="uk-modal-body">
+        <div class="uk-grid uk-grid-medium" data-uk-grid-margin>
+            <div class="uk-width-1-2">
+                <div class="uk-margin-small-bottom">
+                    <label class="uk-text-bold">{{ 'media.file.show.name'|trans }}</label> :
+                    {{ file.name }}
+                </div>
+                <div class="uk-margin-small-bottom">
+                    <label class="uk-text-bold">{{ 'media.file.show.caption'|trans }}</label> :
+                    {{ file.caption }}
+                </div>
+                <div class="uk-margin-small-bottom">
+                    <label class="uk-text-bold">{{ 'media.file.show.extension'|trans }}</label> :
+                    {{ file.extension }}
+                </div>
+                <div class="uk-margin-small-bottom">
+                    <label class="uk-text-bold">{{ 'media.file.show.size'|trans }}</label> :
+                    {{ file.sizeConvert }}
+                </div>
+                <div class="uk-margin-small-bottom">
+                    <label class="uk-text-bold">{{ 'media.file.show.path'|trans }}</label> :
+                    <a href="{{ file.path }}">{{ file.path }}</a>
+                </div>
+                <div class="uk-margin-small-bottom">
+                    <label class="uk-text-bold">{{ 'media.file.show.created_at'|trans }}</label> :
+                    <span>{{ date_time_ago(file.createdAt) }}</span>
+                </div>
+                <div class="uk-margin-small-bottom">
+                    <label class="uk-text-bold">{{ 'media.file.show.updated_at'|trans }}</label> :
+                    <span>{{ date_time_ago(file.updatedAt) }}</span>
+                </div>
+                <div class="uk-margin-small-bottom">
+                    <label class="uk-text-bold">{{ 'media.file.show.owner'|trans }}</label> :
+                    <span>{{ file.createdBy }}</span>
+                </div>
+            </div>
+            <div class="uk-width-1-2 uk-text-center">
+            	{% if file.picture is not empty %}
+                    <img src="{{ file.path }}" id="item_{{ file.id }}"> 
+                {% elseif file.audio is not empty %}
+                    <audio src="{{ file.path }}" controls id="item_{{ file.id }}" style="width:100%"></audio>
+                {% elseif file.video is not empty %}
+                    <video src="{{ file.path }}" style="width:100%" controls id="item_{{ file.id }}"></video>
+                {% else %}
+                    <embed src="{{ file.path }}" width="100%" controls id="item_{{ file.id }}" /></embed>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

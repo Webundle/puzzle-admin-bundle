@@ -1,0 +1,100 @@
+{% trans_default_domain 'learning' %}
+
+{{ form_start(form, {'attr': {'id': 'form_validation', 'class': 'uk-form-stacked'}}) }}
+    <div class="uk-grid uk-grid-medium" data-uk-grid-margin>
+        <div class="uk-width-xLarge-7-10 uk-width-large-7-10">
+            <div class="md-card">
+                <div class="md-card-content">
+                    <div class="uk-grid uk-grid-divider uk-grid-medium" data-uk-grid-margin>
+                        <div class="uk-width-large-1-1">
+                            <div class="uk-form-row">
+                                {{ form_label(form.name, 'learning.course.form.name'|trans, {'label_attr': {'class' : 'uk-form-label'}}) }}
+                                {{ form_widget(form.name, {'attr' : {'class': 'md-input'}}) }}
+                            </div>
+                            <div class="uk-form-row">
+                                {{ form_widget(form.description, { 'id': 'wysiwyg_ckeditor', 'attr' : { 'class' : 'md-input' } }) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="uk-width-xLarge-3-10 uk-width-large-3-10">
+        	<div class="md-card">
+                <div class="md-card-content">
+                    <div class="uk-form-row">
+                        {{ form_label(form.category, 'learning.course.form.category'|trans, {'label_attr': {'class' : 'uk-form-label'}}) }}
+                        {{ form_widget(form.category, {'attr': {'data-md-selectize' : true}}) }}
+                    </div>
+                    <div class="uk-form-row">
+                        {{ form_label(form.speaker, 'learning.course.form.speaker'|trans, {'label_attr': {'class' : 'uk-form-label'}}) }}
+                        {{ form_widget(form.speaker, {'attr': {'data-md-selectize' : true}}) }}
+                    </div>
+					<div class="uk-form-row">
+                        {{ form_label(form.startedAt, 'learning.course.form.started_at'|trans, {'label_attr': {'class' : 'uk-form-label'}}) }}
+                        {% if course is defined %}
+                            {{ form_widget(form.startedAt, {'id': 'started_at', 'value': course.startedAt|date('d-m-Y H:i')}) }}
+                        {% else %}
+                            {{ form_widget(form.startedAt, {'id': 'started_at'}) }}
+                        {% endif %}
+                    </div>
+                    <div class="uk-form-row">
+                        {{ form_label(form.endedAt, 'learning.course.form.ended_at'|trans, {'label_attr': {'class' : 'uk-form-label'}}) }}
+                        {% if course is defined %}
+                            {{ form_widget(form.endedAt, {'id': 'ended_at', 'value': course.endedAt|date('d-m-Y H:i')}) }}
+                        {% else %}
+                            {{ form_widget(form.endedAt, {'id': 'ended_at'}) }}
+                        {% endif %}
+                    </div>
+                    <div class="uk-form-row">
+                        {{ form_label(form.location, 'learning.course.form.location'|trans, {'label_attr': {'class' : 'uk-form-label'}}) }}
+                        {{ form_widget(form.location, {'attr': {'class' : 'md-input'}}) }}
+                    </div>
+                    <div class="uk-form-row">
+                        {{ form_label(form.tags, 'learning.course.form.tags'|trans, {'label_attr': {'class' : 'uk-form-label'}}) }}
+                        {% if course is defined and course.tags is not empty %}
+                            {{ form_widget(form.tags, {'attr': {'data-role' : 'materialtags'}, 'value': course.tags|join(',')}) }}
+                        {% else %}
+                            {{ form_widget(form.tags, {'attr': {'data-role' : 'materialtags'}}) }}
+                        {% endif %}
+                    </div>
+                    <div class="uk-form-row">
+                        <div class="uk-float-right">
+                            {{ form_widget(form.visible, {'attr': {'data-switchery' : true}}) }}
+                        </div>
+                        {{ form_label(form.visible, 'learning.course.form.visible'|trans, {'label_attr': {'class' : 'uk-form-label'}}) }}
+                    </div>
+                    <div class="uk-form-row">
+                        <div class="uk-float-right">
+                            {{ form_widget(form.enableComments, {'attr': {'data-switchery' : true}}) }}
+                        </div>
+                        {{ form_label(form.enableComments, 'learning.course.form.enable_comments'|trans, {'label_attr': {'class' : 'uk-form-label'}}) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="uk-grid uk-grid-medium" data-uk-grid-margin>
+        <div class="uk-width-1-4">
+            {{ render(controller('MediaBundle:Admin:embedFile', {'formData': form.picture, 'data': course is defined ? course.picture : null, 'type': 'picture', 'context': 'learning/course', 'multiple': false })) }}
+        </div>
+        <div class="uk-width-1-4">
+            {{ render(controller('MediaBundle:Admin:embedFile', {'formData': form.audio, 'data': course is defined ? course.audio : null, 'type': 'audio', 'context': 'learning/course', 'multiple': false })) }}
+        </div>
+        <div class="uk-width-1-4">
+            {{ render(controller('MediaBundle:Admin:embedFile', {'formData': form.video, 'data': course is defined ? course.video : null, 'type': 'video', 'context': 'learning/course', 'multiple': false })) }}
+        </div>
+        <div class="uk-width-1-4">
+            {{ render(controller('MediaBundle:Admin:embedFile', {'formData': form.document, 'data': course is defined ? course.document : null, 'type': 'document', 'context': 'learning/course', 'multiple': false })) }}
+        </div>
+    </div>
+    
+    <div class="uk-width-1-1 uk-text-center uk-margin-top">
+        <a class="md-btn md-btn-default" href="{{ course is defined ? url('puzzle_admin_learning_course_show', {'id': course.id}) : url('puzzle_admin_learning_course_list') }}">
+            {{ 'learning.course.form.cancel'|trans }}
+        </a>
+        <button class="md-btn md-btn-success" type="submit">
+            {{ course is defined ? 'learning.course.form.update'|trans : 'learning.course.form.create'|trans }}
+        </button>
+    </div>
+{{ form_end(form) }}

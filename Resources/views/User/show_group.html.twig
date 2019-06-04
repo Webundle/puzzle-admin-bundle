@@ -1,0 +1,123 @@
+{% trans_default_domain 'user' %}
+
+{% extends 'AdminBundle:Advert:layout.html.twig' %}
+
+{% block title %} {{ parent() }} - {{ "user.group.show.title"|trans|capitalize }} {{ group.name }} {% endblock %}
+
+{% block breadcrumbmodule %}
+    {{ parent() }}
+    <a href=" {{ url('puzzle_admin_user_group_list') }} ">
+       {{ 'user.group.list.title'|trans|capitalize }}
+    </a>
+    <i class="fa fa-chevron-right"></i>
+    <em>{{ "user.group.show.title"|trans|capitalize }}</em>
+{% endblock %}
+
+{% block content %}
+     <div id="page_content_inner">
+        <div class="uk-grid uk-grid-medium" data-uk-grid-margin>
+            <div class="uk-width-xLarge-3-10 uk-width-large-3-10">
+                <div class="md-card">
+                    <div class="md-card-content">
+                        <div class="uk-margin-bottom">
+                            <label class="uk-text-bold">{{ 'user.group.show.name'|trans }} : </label>
+                            <span>{{ group.name }}</span>
+                        </div>
+                        <div class="uk-margin-bottom">
+                            <label class="uk-text-bold">{{ 'user.group.show.created_at'|trans }} : </label>
+                            <span>{{ date_time_ago(group.createdAt) }}</span>
+                        </div>
+                        <div class="uk-margin-bottom">
+                            <label class="uk-text-bold">{{ 'user.group.show.updated_at'|trans }} : </label>
+                            <span>{{ date_time_ago(group.updatedAt) }}</span>
+                        </div>
+                        <div>
+                            <label class="uk-text-bold">{{ 'user.group.show.description'|trans }} : </label>
+                            <span>{{ group.description }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="uk-text-center uk-margin-top">
+                    <a href="{{ url('puzzle_admin_user_group_update', { 'id': group.id })}}" class="show-modal md-btn md-btn-primary" id="{{ group.id }}">
+                        <i class="fa fa-pencil"></i>
+                        {{ "user.group.show.update"|trans }}
+                    </a>
+                    <a href="#" class="remove-item md-btn md-btn-danger" data-route="{{ url('puzzle_admin_user_group_delete', {'id' : group.id}) }}" data-label="{{ group.name }}" data-title="{{ 'user.group.delete.title' }}" data-text="{{ 'user.group.delete.description'|trans({'%groupName%': group.name}) }}">
+                        <i class="fa fa-trash-o"></i>
+                        {{ "user.group.show.delete"|trans }}
+                    </a>
+                </div>
+            </div>
+            <div class="uk-width-xLarge-7-10 uk-width-large-7-10">
+                <div class="md-card">
+                    {% if users is not empty %}
+                        <div class="toggle-action uk-hidden">
+                            <select class="remove-list">
+                                <option value="">{{ 'user.group.list.grouped_actions'|trans }}</option>
+                                <option value="delete">{{ 'user.useriser.list.delete'|trans }}</option>
+                            </select>
+                            <input type="hidden" value="{{ users|length|default('0') }}" id="toggle-items-count">
+                            <input type="hidden" value="0" id="toggle-items-checked-count">
+                        </div>
+                    {% endif %}
+                    <div class="md-card-content">
+                        <table id="dt_individual_search" class="uk-table uk-table-hover" cellspacing="0" width="100%">
+                            <thead>
+                            <tr>
+                                <th class="no-sort"></th>
+                                <th class="no-sort">{{ "user.group.show.name"|trans }}</th>
+                                <th>{{ "user.group.list.created_at"|trans }}</th>
+                                <th>{{ "user.group.list.updated_at"|trans }}</th>
+                                {# <th class="no-sort uk-text-right">{{ "user.group.show.actions"|trans }}</th> #}
+                            </tr>
+                            </thead>
+                            <tbody>
+                                {% for user in users %}
+                                    <tr class="toggleable" id="item-{{ user.id }}">
+                                        <td>
+                                            <a class="uk-text-muted uk-text-small uk-text-left toggleable-btn-select" href="#">
+                                                <i class="material-icons md-24 toggle-icon toggle-item" id="toggle-item-{{ user.id }}">&#xE835;</i>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="{{ url('puzzle_admin_user_show', {'id': user.id}) }}">{{ user }}</a>
+                                        </td>
+                                        <td>{{ date_time_ago(user.createdAt) }}</td>
+                                        <td>{{ date_time_ago(user.updatedAt) }}</td>
+                                        {# <td class="uk-text-right">
+                                            <div class="uk-button-dropdown" data-uk-dropdown="{mode:'click', pos:'bottom-right'}">
+                                                <a><i class="fa fa-align-justify"></i></a>
+                                                <div class="uk-dropdown uk-dropdown-small uk-text-left" aria-hidden="true">
+                                                    <ul class="uk-nav uk-nav-dropdown">
+                                                        <li>
+                                                            <a href="{{ url('puzzle_admin_user_show', {'id': user.id}) }}">
+                                                                <i class="fa fa-eye"></i>
+                                                                {{ "user.group.list.show"|trans }}
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="{{ url('puzzle_admin_user_update', {'id': user.id, 'parent': group.id}) }}" class="show-modal">
+                                                                <i class="fa fa-pencil"></i>
+                                                                {{ "user.group.list.update"|trans }}
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#" data-route="{{ url('puzzle_admin_user_group_delete', {'id' : user.id}) }}" data-label="{{ user }}" class="remove-item" data-title="{{ 'user.group.delete.title' }}" data-text="{{ 'user.group.delete.description'|trans({'%groupName%': user}) }}">
+                                                                <i class="fa fa-trash-o uk-text-danger"></i>
+                                                                {{ "user.group.list.delete"|trans }}
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </td> #}
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% trans_default_domain 'static' %}
+
+{{ form_start(form, {'method': 'POST'}) }}
+    <div class="uk-width-medium-7-10 uk-container-center">
+        <div class="md-card">
+            <div class="md-card-content">
+                <div class="uk-grid uk-grid-divider uk-grid-medium" data-uk-grid-margin>
+                    <div class="uk-width-large-1-1">
+                        <div class="uk-form-row">
+                            {{ form_label(form.name, 'static.template.form.name'|trans, {'label_attr': {'class': 'uk-form-label'}}) }}
+                            {{ form_widget(form.name, {'attr': {'class': 'md-input'}}) }}
+                        </div>
+                        <div class="uk-form-row">
+                            {{ form_widget(form.content, {'attr':{'data-uk-htmleditor': "{markdown:true}" } }) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="uk-margin-top uk-text-center">
+        <a href="{{ url('puzzle_admin_static_template_list') }}" class="md-btn">
+            {{ 'static.template.form.cancel'|trans }}
+        </a>
+        <button class="md-btn md-btn-success" type="submit">
+            {{ template is defined ? 'static.template.form.update'|trans : 'static.template.form.create'|trans }}
+        </button>
+    </div>
+{{ form_end(form) }}

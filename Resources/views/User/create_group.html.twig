@@ -1,0 +1,19 @@
+{% trans_default_domain 'user' %}
+
+<div class="uk-modal-dialog">
+    <div class="uk-modal-header">
+        <h3>{{ "user.group.create.title"|trans }}</h3>
+    </div>
+    <div class="uk-modal-body">
+        {% include 'AdminBundle:User:form_group.html.twig' with {'form': form} %}
+    </div>
+</div>
+
+<script type="text/javascript">
+    var $kUI_multiselect_users = $('#kUI_multiselect_users');
+    if($kUI_multiselect_users.length) {
+        $kUI_multiselect_users.kendoMultiSelect();
+    }
+</script>
+
+

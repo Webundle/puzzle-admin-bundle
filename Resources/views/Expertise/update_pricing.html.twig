@@ -1,0 +1,19 @@
+{% trans_default_domain 'messages' %}
+
+{% extends 'AdminBundle:Expertise:layout.html.twig' %}
+
+{% block title %}{{ parent() }} - {{ "expertise.pricing.update"|trans|capitalize }} {% endblock %}
+{% block breadcrumbmodule %}
+    {{ parent() }}
+    <a href=" {{ url('admin_expertise_pricing_list') }} ">
+       {{ 'expertise.pricing.list'|trans|capitalize }}
+    </a>
+    <i class="fa fa-chevron-right"></i>
+    <em>{{ "expertise.pricing.update"|trans|capitalize }}</em>
+{% endblock %}
+
+{% block content %}
+    <div id="page_content_inner">
+        {% include 'AdminBundle:Expertise:form_pricing.html.twig' with {'form': form, 'pricing': pricing} %}
+    </div>
+{% endblock %}

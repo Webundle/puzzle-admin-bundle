@@ -1,0 +1,235 @@
+user:
+    title: 'Comptes'
+    description: 'Gestion des comptes utilisateurs'
+    role: 'Accéder à l''espace utilisateur'
+    role_account: 'Gestion de comptes'
+    icon: 'supervisor_account'
+    my_account: 'Mon compte'
+    logout: 'Déconnexion'
+    login:
+        title: 'Connectez-vous'
+        button: 'Se connecter'
+        help: 'Besoin d''aide ?'
+        remember_me: 'Maintenir ma connexion active'
+        impossible: 'Impossible de se connecter ?'
+        help_text: |
+            <p>Voici les informations qui vous permettront d'accéder à votre compte le plus rapidement possible.</p>
+            <p>Tout d'abord, essayez la chose la plus simple: si vous vous rappelez de votre mot de passe mais qu'il ne fonctionne pas, assurez-vous que Caps Lock est désactivé et que votre nom d'utilisateur est orthographié correctement, puis réessayez.</p>
+            <p>Si votre mot de passe ne fonctionne toujours pas, il est temps de <a href="#" id="password_reset_show">réinitialiser votre mot</a>.</p>
+        back: 'Retourner à l''espace public'
+        registration: 'Vous n''avez pas encore de compte ?'
+    resetting:
+        title: 'Réinitialiser votre mot de passe'
+        button: 'Réinitialiser'
+        request:
+            username: 'Nom d''utilisateur ou adresse e-mail'
+            submit: 'Réinitialiser le mot de passe'
+        check_email: |
+            Un e-mail a été envoyé. Il contient un lien sur lequel il vous faudra cliquer pour réinitialiser votre mot de passe.
+            Remarque: Vous ne pouvez demander un nouveau mot de passe que toutes les %tokenLifetime% heures.
+
+            Si vous ne recevez pas un e-mail, vérifiez votre dossier spam ou essayer à nouveau.
+        email:
+            subject: 'Réinitialisation de votre mot de passe'
+            message: |
+                Bonjour %username% !
+
+                Pour réinitialiser votre mot de passe, merci de vous rendre sur <a href="%confirmationUrl%">%confirmationUrl%</a>
+
+                Cordialement,
+                L'équipe
+    registration:
+        title: 'Inscrivez-vous'
+        button: 'S''inscrire'
+        login: 'Vous avez déjà un compte ?'
+        email:
+            notification: 'Un e-mail a été envoyé à l''adresse <em>%email%</em>'
+            subject: 'Activation de votre compte'
+            message: |
+                Bonjour %username% ! <br/>
+
+                Pour activer votre compte, merci de vous rendre sur <a href="%confirmationUrl%">%confirmationUrl%</a>.<br∕>
+
+                Pour vous connecter, utilisez vos paramètres de ci-dessous:<br/><br/>
+
+                nom d'utilisateur: <b>%username%</b><br/>
+
+                mot de passe: <b>%plainPassword%</b><br/>
+
+                Cordialement, <br/>
+                L'équipe
+    account:
+        navigation: 'Liste des comptes'
+        role: 'Gérer les comptes utilisateur'
+        list:
+            title: 'Liste des comptes'
+            fullName: 'Nom & Prénoms'
+            email: 'E-mail'
+            phone_number: 'Téléphone'
+            isActive: 'Status'
+            password_confirmation: 'Confirmer le mot de passe'
+            credentials_expires_at: 'Date d''expiration des paramètres'
+            account_expires_at: 'Date d''expiration du compte'
+            enabled: 'Activé'
+            enabled_yes: 'Oui'
+            enabled_no: 'Non'
+            locked: 'Vérrouillé'
+            locked_yes: 'Oui'
+            locked_no: 'Non'
+            new: 'Nouveau'
+            show: 'Voir les détails'
+            enable: 'Activer'
+            disable: 'Désactiver'
+            lock: 'Verrouiller'
+            unlock: 'Déverrouiller'
+            update: 'Modifier'
+            delete: 'Supprimer'
+            grouped_actions: 'Actions groupées'
+            actions: 'Actions'
+        show:
+            title: 'Détails du compte utilisateur'
+            first_name: 'Prénoms'
+            last_name: 'Nom'
+            full_name: 'Nom & Prénoms'
+            email: 'E-mail'
+            phone_number: 'Téléphone'
+            role: 'Roles'
+            picture: 'Photo de profil'
+            isActive: 'Status'
+            username: 'Nom d''utilisateur'
+            password: 'Mot de passe'
+            password_confirmation: 'Confirmer le mot de passe'
+            credentials_expires_at: 'Date d''expiration des paramètres'
+            account_expires_at: 'Date d''expiration du compte'
+            enabled: 'Désactiver le compte'
+            locked: 'Verrouiller le compte'
+            update: 'Modifier'
+            delete: 'Supprimer'
+            enable: 'Activer'
+            roles: 'Roles'
+            undefined: 'Non défini(e)'
+        update_settings: 'Mon compte'
+        create:
+            title: 'Ajouter un nouveau compte utilisateur'
+            subtitle: 'Description'
+            success: 'Le compte utilisateur %user% a été créé avec succès'
+        form:
+            first_name: 'Prénoms'
+            last_name: 'Nom'
+            email: 'E-mail'
+            phone_number: 'Téléphone'
+            role: 'Entreprise'
+            picture: 'Photo de profil'
+            username: 'Nom d''utilisateur'
+            current_password: 'Mot de passe actuel'
+            plain_password_first: 'Mot de passe'
+            plain_password_second: 'Confirmer le mot de passe'
+            credentials_expires_at: 'Date d''expiration des accès'
+            account_expires_at: 'Date d''expiration du compte'
+            enabled: 'Déactiver le compte'
+            locked: 'Verrouiller le compte'
+            roles: 'Roles'
+            create: 'Ajouter'
+            update: 'Modifier'
+            cancel: 'Annuler'
+        update:
+            title: 'Modifier un compte utilisateur'
+            subtitle: 'Description'
+            success: 'Le compte utilisateur %user% a été modifié avec succès'
+        delete: 
+            description: 'Etes-vous sûr de vouloir supprimer le compte utilisateur <em>%user%</em>'
+            list: 'Etes-vous sûr de vouloir supprimer la sélection de comptes utilisateur'
+        profile:
+            show: 'Mon profil'
+            update_settings: 'Modifier mes paramètres'
+            update_password: 'Modifier mon mot de passe'
+        enable:
+            title: 'Réactivation de votre compte'
+            message: |
+                Bonjour %username% ! <br/>
+
+                Votre compte a été re-activé.
+
+                Cordialement, <br/>
+                L'équipe
+            success: 'Le compte %user% a été re-activé.'
+        disable:
+            title: 'Désactivation de votre compte'
+            message: |
+                Bonjour %username% ! <br/>
+
+                Votre compte a été désactivé. 
+
+                Veuillez vous contacter pour plus d'informations.
+
+                Cordialement, <br/>
+                L'équipe
+            success: 'Le compte %user% a été désactivé.'
+        lock:
+            title: 'Verrouillage de votre compte'
+            message: |
+                Bonjour %username% ! <br/>
+
+                Votre compte a été verrouillé.
+                
+                Veuillez vous contacter pour plus d'informations.
+
+                Cordialement, <br/>
+                L'équipe
+            success: 'Le compte %user% a été verrouillé.'
+        unlock:
+            title: 'Déverrouillage de votre compte'
+            message: |
+                Bonjour %username% ! <br/>
+
+                Votre compte a été déverrouillé. 
+
+                Veuillez vous contacter pour plus d'informations.
+
+                Cordialement, <br/>
+                L'équipe
+            success: 'Le compte %user% a été déverrouillé.'
+    group:
+        navigation: 'Groupes'
+        list:
+            title: 'Liste des groupes'
+            name: 'Nom'
+            created_at: 'Date de création'
+            updated_at: 'Date d''édition'
+            users: 'Utilisateurs'
+            new: 'Nouveau'
+            show: 'Voir les détails'
+            enable: 'Activer'
+            update: 'Modifier'
+            delete: 'Supprimer'
+            grouped_actions: 'Actions groupées'
+            actions: 'Actions'
+        show:
+            title: 'Liste des groupes'
+            name: 'Nom'
+            description: 'Description'
+            created_at: 'Date de création'
+            updated_at: 'Date d''édition'
+            users: 'Utilisateurs'
+            update: 'Modifier'
+            delete: 'Supprimer'
+            enable: 'Activer'
+            undefined: 'Non défini(e)'
+        create:
+            title: 'Ajouter un nouveau groupe'
+            subtitle: 'Description'
+            success: 'Le groupe %groupName% a été créé avec succès'
+        form:
+            name: 'Nom'
+            description: 'Description'
+            users: 'Utilisateurs'
+            create: 'Ajouter'
+            update: 'Modifier'
+            cancel: 'Annuler'
+        update:
+            title: 'Modifier un compte utilisateur'
+            subtitle: 'Description'
+            success: 'Le groupe %groupName% a été modifié avec succès'
+        delete: 
+            description: 'Etes-vous sûr de vouloir supprimer le groupe <em>%groupName%</em>'
+            list: 'Etes-vous sûr de vouloir supprimer la sélection de groupes'

@@ -1,0 +1,87 @@
+{% trans_default_domain 'user' %}
+
+{{ form_start(form, {'attr': {'class': 'uk-form-stacked'}}) }}
+    <div class="uk-grid" data-uk-grid-margin>
+        <div class="uk-width-large-1-2">
+            <div class="md-card">
+                <div class="md-card-content">
+                    <div class="uk-form-row">
+                        {{ form_label(form.lastName, 'user.account.form.last_name'|trans, {'label_attr': {'class': 'uk-form-label'}}) }}
+                        {{ form_widget(form.lastName, {'attr': {'class': 'md-input'}}) }}
+                    </div>
+                    <div class="uk-form-row">
+                        {{ form_label(form.firstName, 'user.account.form.first_name'|trans, {'label_attr': {'class': 'uk-form-label'}}) }}
+                        {{ form_widget(form.firstName, {'attr': {'class': 'md-input'}}) }}
+                    </div>
+                    <div class="uk-form-row">
+                        {{ form_label(form.phoneNumber, 'user.account.form.phone_number'|trans, {'label_attr': {'class': 'uk-form-label'}}) }}
+                        {{ form_widget(form.phoneNumber, {'attr': {'class': 'md-input'}}) }}
+                    </div>
+                    <div class="uk-form-row">                        
+                        {{ form_label(form.email, 'user.account.form.email'|trans, {'label_attr': {'class': 'uk-form-label'}}) }}
+                        {{ form_widget(form.email, {'attr': {'class': 'md-input'}}) }}
+                    </div>
+                    <div class="uk-form-row">
+                        {{ form_label(form.username, 'user.account.form.username'|trans, {'label_attr': {'class': 'uk-form-label'}}) }}
+                        {{ form_widget(form.username, {'attr': {'class': 'md-input'}}) }}
+                    </div>
+                    <div class="uk-form-row">
+                        {{ form_label(form.plainPassword.first, 'user.account.form.plain_password_first'|trans, {'label_attr': {'class': 'uk-form-label'}}) }}
+                        {{ form_widget(form.plainPassword.first, {'attr': {'class': 'md-input'}}) }}
+                        {{ form_errors(form.plainPassword) }}
+                    </div>
+                    <div class="uk-form-row">
+                        {{ form_label(form.plainPassword.second, 'user.account.form.plain_password_second'|trans, {'label_attr': {'class': 'uk-form-label'}}) }}
+                        {{ form_widget(form.plainPassword.second, {'attr': {'class': 'md-input'}}) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="uk-width-large-1-2">
+            <div class="md-card">
+                <div class="md-card-content">
+                    <div class="uk-form-row">
+                        {{ form_label(form.credentialsExpiresAt, 'user.account.form.credentials_expires_at'|trans, {'label_attr': {'class' : 'uk-form-label'}}) }}
+                        {% if user is defined and user.accountExpiresAt is not empty %}
+                            {{ form_widget(form.credentialsExpiresAt, {'id': 'credentials_expires_at', 'attr': {'style': 'width:100%'}, 'value': user.credentialsExpiresAt|date('d-m-Y H:i')}) }}
+                        {% else %}
+                            {{ form_widget(form.credentialsExpiresAt, {'id': 'credentials_expires_at', 'attr': {'style': 'width:100%'}}) }}
+                        {% endif %}
+                    </div>
+                    <div class="uk-form-row">
+                        {{ form_label(form.accountExpiresAt, 'user.account.form.account_expires_at'|trans, {'label_attr': {'class' : 'uk-form-label'}}) }}
+                        {% if user is defined and user.accountExpiresAt is not empty %}
+                            {{ form_widget(form.accountExpiresAt, {'id': 'account_expires_at', 'attr': {'style': 'width:100%'}, 'value': user.accountExpiresAt|date('d-m-Y H:i')}) }}
+                        {% else %}
+                            {{ form_widget(form.accountExpiresAt, {'id': 'account_expires_at', 'attr': {'style': 'width:100%'}}) }}
+                        {% endif %}
+                    </div>
+                    <div class="uk-form-row">
+                        <div class="uk-float-right">
+                            {{ form_widget(form.enabled, {'attr': {'data-switchery': true}}) }}
+                        </div>
+                        {{ form_label(form.enabled, 'user.account.form.enabled'|trans, {'label_attr': {'class': 'uk-display-block uk-margin-small-top uk-form-label'}}) }}
+                    </div>
+                    <div class="uk-form-row">
+                        <div class="uk-float-right">
+                            {{ form_widget(form.locked, {'attr': {'data-switchery': true}}) }}
+                        </div>
+                        {{ form_label(form.locked, 'user.account.form.locked'|trans, {'label_attr': {'class': 'uk-display-block uk-margin-small-top uk-form-label'}}) }}
+                    </div>
+                     <div class="uk-form-row">
+                        {{ form_label(form.roles, 'user.account.form.roles'|trans, {'label_attr': {'class': 'uk-display-block uk-margin-small-top uk-form-label'}}) }}
+                        {{ form_widget(form.roles, {'id': 'kUI_multiselect_roles'}) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="uk-text-center uk-margin-top">
+        <a class="md-btn md-btn-default" href="{{ user is defined ? url('puzzle_admin_user_show', {'id': user.id}) : url('puzzle_admin_user_list') }}">
+            {{ 'user.account.form.cancel'|trans }}
+        </a>
+        <button class="md-btn md-btn-success" type="submit">
+            {{ user is defined ? 'user.account.form.update'|trans : 'user.account.form.create'|trans }}
+        </button>
+    </div>
+{{ form_end(form) }}

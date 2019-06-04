@@ -1,0 +1,41 @@
+{% trans_default_domain 'static' %}
+
+<div class="uk-modal-dialog">
+	<div class="uk-modal-header">
+        <h3>{{ "static.page.show.title"|trans }}</h3>
+    </div>
+    <div class="uk-modal-body">
+        <div class="uk-width-1-1">
+            <div class="uk-margin-small-bottom">
+                <label class="uk-text-bold">{{ 'static.page.show.name'|trans }}</label> :
+                {{ page.name }}
+            </div>
+            <div class="uk-margin-small-bottom">
+                <label class="uk-text-bold">{{ 'static.page.show.template'|trans }}</label> :
+                {{ page.template.name }}
+            </div>
+            <div class="uk-margin-small-bottom">
+                <label class="uk-text-bold">{{ 'static.page.show.slug'|trans }}</label> :
+                <code>{{ '{{ puzzle_static_page('~ page.slug ~') }}' }}</code>
+            </div>
+            <div class="uk-margin-small-bottom">
+                <label class="uk-text-bold">{{ 'static.page.show.created_at'|trans }}</label> :
+                <span>{{ date_time_ago(page.createdAt) }}</span>
+            </div>
+            <div class="uk-margin-small-bottom">
+                <label class="uk-text-bold">{{ 'static.page.show.updated_at'|trans }}</label> :
+                <span>{{ date_time_ago(page.updatedAt) }}</span>
+            </div>
+            <div class="uk-margin-small-bottom">
+                <label class="uk-text-bold">{{ 'static.page.show.author'|trans }}</label> :
+                <span>{{ page.createdBy }}</span>
+            </div>
+        </div>
+    </div>
+    <div class="uk-modal-footer uk-text-right">
+        <button type="button" class="md-btn md-btn-flat uk-modal-close">{{ "static.page.show.close"|trans }}</button>
+        <a class="md-btn md-btn-success" href="{{ url('puzzle_admin_static_page_update', {'id': page.id}) }}">
+            {{ 'static.page.show.update'|trans }}
+        </a>
+    </div>
+</div>

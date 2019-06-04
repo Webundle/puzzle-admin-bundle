@@ -1,0 +1,19 @@
+{% trans_default_domain 'messages' %}
+
+{% extends 'AdminBundle:Newsletter:layout.html.twig' %}
+
+{% block title %}{{ parent() }} - {{ "newsletter.template.create"|trans }} {% endblock %}
+
+{% block breadcrumbmodule %}
+	{{ parent() }}
+	<a href="{{ url('admin_newsletter_template_list') }}">{{ "newsletter.template.list"|trans|capitalize }}</a>
+	<i class="fa fa-chevron-right"></i>
+	<em>{{ "newsletter.template.create"|trans|capitalize }}</em>
+{% endblock %}
+
+{% block content %}
+    <div id="page_content_inner">
+        {% include 'AdminBundle:Newsletter:form_template.html.twig' with {'form': form} %}
+    </div>
+{% endblock %}
+

@@ -1,0 +1,19 @@
+{% trans_default_domain 'messages' %}
+
+<div class="uk-modal-dialog">
+    <div class="uk-modal-header">
+        <h3>{{ "contact.group.create"|trans }}</h3>
+    </div>
+    <div class="uk-modal-body">
+        {% include 'AdminBundle:Contact:form_group.html.twig' with {'form': form} %}
+    </div>
+</div>
+
+<script type="text/javascript">
+    var $kUI_multiselect_contacts = $('#kUI_multiselect_contacts');
+    if($kUI_multiselect_contacts.length) {
+        $kUI_multiselect_contacts.kendoMultiSelect();
+    }
+</script>
+
+

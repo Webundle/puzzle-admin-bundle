@@ -1,0 +1,10 @@
+{% trans_default_domain 'learning' %}
+
+<div class="uk-modal-dialog">
+    <div class="uk-modal-header">
+        <h3>{{ "learning.category.create.title"|trans }}</h3>
+    </div>
+    <div class="uk-modal-body">
+        {% include 'AdminBundle:Learning:form_category.html.twig' with {'form': form} %}
+    </div>
+</div>

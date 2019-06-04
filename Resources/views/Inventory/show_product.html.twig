@@ -1,0 +1,206 @@
+{% trans_default_domain 'messages' %}
+
+{% extends 'AdminBundle:Inventory:layout.html.twig' %}
+
+{% block title %}{{ parent() }} - {{ "inventory.product.show"|trans|capitalize }} {% endblock %}
+
+{% block breadcrumbmodule %}
+	{{ parent() }}
+    <a href=" {{ url('admin_inventory_product_list') }} ">
+       {{ 'inventory.product.list'|trans|capitalize }}
+    </a>
+	<i class="fa fa-chevron-right"></i>
+	<em>{{ "inventory.product.show"|trans|capitalize }}</em>
+{% endblock %}
+
+{% block headingactions %}
+<div class="heading_actions">
+    <div class="md-card-head-menu" data-uk-dropdown="{pos:'bottom-right'}">
+        <a class="uk-text-bold" href="#" data-uk-modal="{ center:true }">
+            {{ 'layout.actions'|trans|upper }}
+            <i class="fa fa-ellipsis-v"></i>
+        </a>
+        <div class="uk-dropdown">
+            <ul class="uk-nav">
+                <li>
+                    <a href="{{ url('admin_inventory_product_update', { 'id': product.id }) }}">
+                        <i class="fa fa-pencil uk-margin-small-right"></i>
+                        {{ "button.update"|trans }}
+                    </a>
+                </li>
+				<li>
+					<a href="{{ url('admin_inventory_stock_movement_list', {'id': product.id}) }}">
+						<i class="fa fa-exchange"></i>
+						{{ "inventory.product.manage_stock"|trans }}
+					</a>
+				</li>
+				<li>
+					<a href="{{ url('admin_inventory_product_update_gallery', {'id': product.id}) }}">
+						<i class="fa fa-list"></i>
+						{{ "inventory.product.manage_gallery"|trans }}
+					</a>
+				</li>
+                <li>
+                    <a href="#" alt="{{ "button.remove"|trans }}" data-route="{{ url('admin_inventory_product_delete', {'id': product.id}) }}" data-text="{{ 'inventory.product.delete'|trans({'%productName%': product.name}) }}" data-label="{{ product.name }}" class="remove-item">
+                        <i class="uk-text-danger fa fa-trash-o uk-margin-small-right"></i>
+                        {{ "button.remove"|trans }}
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+    <div id="page_content_inner">
+		<div class="uk-grid uk-grid-medium" data-uk-grid-margin>
+	        <div class="uk-width-xLarge-7-10 uk-width-large-7-10">
+	            <div class="md-card">
+	              <div class="md-card-content">
+	                  <div class="uk-grid uk-grid-medium" data-uk-grid-margin>
+	                      <div class="uk-width-1-2">
+	                          <div class="uk-width-1-1">
+	                              <div class="uk-form-row">
+									  <label for="" class="uk-form-label">{{ "inventory.product.name"|trans }}</label>
+									  <input type="text" name="" value="{{ product.name }}" disabled class="md md-input">
+	                              </div>
+	                              <div class="uk-form-row">
+									  <label for="" class="uk-form-label">{{ "inventory.product.buyingPrice"|trans }}</label>
+									  <input type="text" name="" value="{{ product.buyingPrice }}" disabled class="md md-input">
+	                              </div>
+	                              <div class="uk-form-row">
+									  <label for="" class="uk-form-label">{{ "inventory.product.costPrice"|trans }}</label>
+									  <input type="text" name="" value="{{ product.costPrice }}" disabled class="md md-input">
+	                              </div>
+	                              <div class="uk-form-row">
+									  <label for="" class="uk-form-label">{{ "inventory.product.sellingPrice"|trans }}</label>
+									  <input type="text" name="" value="{{ product.sellingPrice }}" disabled class="md md-input">
+	                              </div>
+	                              <div class="uk-form-row">
+									  <label for="" class="uk-form-label">{{ "inventory.product.reducedPrice"|trans }}</label>
+									  <input type="text" name="" value="{{ product.reducedPrice }}" disabled class="md md-input">
+	                              </div>
+	                              <div class="uk-form-row">
+									  <label for="" class="uk-form-label">{{ "inventory.product.reductionExpiredAt"|trans }}</label>
+	                                  {% if post is not defined or product.reductionExpiredAt is empty %}
+									  	<input type="text" name="" value="" disabled class="md md-input">
+	                                  {% else %}
+									  	<input type="text" name="" value="{{ product.reductionExpiredAt|date('d-m-Y') }}" disabled class="md md-input">
+								  	  {% endif %}
+	                              </div>
+	                          </div>
+	                      </div>
+	                    <div class="uk-width-1-2">
+	                        <div class="uk-width-large-1-1">
+	                            <div class="uk-form-row">
+	                                <div class="uk-input-group">
+	                                    <span class="uk-input-group-addon">
+	                                        <i class="fa fa-cubes"></i>
+	                                    </span>
+	  									  <label for="" class="uk-form-label">{{ "inventory.product.stock"|trans }}</label>
+	  									  <input type="text" name="" value="{{ product.totalStock }}" disabled class="md md-input">
+	                                </div>
+	                            </div>
+								<div class="uk-form-row">
+	                                <div class="uk-input-group">
+	                                    <span class="uk-input-group-addon">
+	                                        <i class="fa fa-cubes"></i>
+	                                    </span>
+	  									  <label for="" class="uk-form-label">{{ "inventory.product.availableStock"|trans }}</label>
+	  									  <input type="text" name="" value="{{ product.availableStock }}" disabled class="md md-input">
+	                                </div>
+	                            </div>
+								<div class="uk-form-row">
+	                                <div class="uk-input-group">
+	                                    <span class="uk-input-group-addon">
+	                                        <i class="fa fa-cubes"></i>
+	                                    </span>
+	  									  <label for="" class="uk-form-label">{{ "inventory.product.soldStock"|trans }}</label>
+	  									  <input type="text" name="" value="{{ product.soldStock }}" disabled class="md md-input">
+	                                </div>
+	                            </div>
+	                            <div class="uk-form-row">
+	                                <div class="uk-input-group">
+	                                    <span class="uk-input-group-addon">
+	                                        <i class="fa fa-warning"></i>
+	                                    </span>
+	  									  <label for="" class="uk-form-label">{{ "inventory.product.alertStock"|trans }}</label>
+	  									  <input type="text" name="" value="{{ product.alertStock }}" disabled class="md md-input">
+	                                </div>
+	                            </div>
+	                            <div class="uk-form-row">
+	                                <div class="uk-input-group">
+	                                    <span class="uk-input-group-addon">
+	                                        <i class="fa fa-calendar-o"></i>
+	                                    </span>
+	  									  <label for="" class="uk-form-label">{{ "inventory.product.deliveryStock"|trans }}</label>
+	  									  <input type="text" name="" value="{{ product.deliveryStock }}" disabled class="md md-input">
+	                                </div>
+	                            </div>
+	                           	<div class="uk-form-row">
+	  	                            <div class="uk-input-group">
+	  	                                <span class="uk-input-group-addon">
+	                                        <i class="fa fa-shopping-basket"></i>
+  	                                    </span>
+	  									<label for="" class="uk-form-label">{{ "inventory.product.limitCommand"|trans }}</label>
+	  									<input type="text" name="" value="{{ product.limitCommand }}" disabled class="md md-input">
+	  	                            </div>
+	  	                        </div>
+	                        </div>
+	                    </div>
+	                </div>
+	              </div>
+	            </div>
+	            <div class="md-card">
+	                <div class="md-card-content">
+	                    <div class="uk-grid uk-grid-divider uk-grid-medium" data-uk-grid-margin>
+	                        <div class="uk-width-large-1-1">
+	                            <div class="uk-form-row">
+									  <label for="" class="uk-form-label">{{ "inventory.product.description"|trans }}</label>
+									  <textarea name="" rows="8" cols="80" disabled class="md md-input">{{ product.description|raw }}</textarea>
+	                            </div>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	        <div class="uk-width-xLarge-3-10 uk-width-large-3-10">
+	        	<div class="md-card">
+	                <div class="md-card-content">
+	                    <div class="uk-form-row">
+						  <label for="" class="uk-form-label">{{ "inventory.product.category"|trans }}</label>
+						  <input type="text" name="" value="{{ product.category.name|default() }}" disabled class="md md-input">
+	                    </div>
+	                    <div class="uk-form-row">
+							<label for="" class="uk-form-label">{{ "inventory.product.brand"|trans }}</label>
+							<input type="text" name="" value="{{ product.brand.name|default() }}" disabled class="md md-input">
+	                    </div>
+	                    <div class="uk-form-row">
+							<label for="" class="uk-form-label">{{ "inventory.product.suppliers"|trans }}</label>
+							{% for supplier in product.suppliers %}
+								<span class="uk-badge uk-badge-primary">{{ supplier.name }}</span>
+							{% endfor %}
+	                    </div>
+	                    <div class="uk-form-row">
+							<label for="" class="uk-form-label">{{ "inventory.product.stores"|trans }}</label>
+							{% for store in product.stores %}
+								<span class="uk-badge uk-badge-primary">{{ store.name }}</span>
+							{% endfor %}
+	                    </div>
+	                    <div class="uk-form-row">
+							<label for="" class="uk-form-label">{{ "inventory.product.tags"|trans }}</label>
+							{% for tag in product.tags %}
+								<span class="uk-badge uk-badge-primary">{{ tag }}</span>
+							{% endfor %}
+	                    </div>
+	                    <div class="uk-form-row">
+							<label for="" class="uk-form-label">{{ "inventory.product.visible"|trans }}</label>
+							<input type="checkbox" name="" value="{{ product.visible }}" disabled 'data-switchery'>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,53 @@
+{% trans_default_domain 'messages' %}
+
+<div class="uk-modal-dialog">
+    {{ form_start(form) }}
+        <div class="uk-modal-header">
+            <h3 class="uk-modal-title">{{ "inventory.stock.create"|trans({'%productName%': product.name }) }}</h3>
+        </div>
+        <div class="uk-modal-body">
+            <div class="uk-grid uk-grid-medium" data-uk-grid-margin>
+                <div class="uk-width-1-2">
+                    <div class="uk-form-row">
+                        {{ form_label(form.description, null, {'label_attr': {'class': 'uk-form-label'}}) }}
+                        {{ form_widget(form.description, {'attr': {'class': 'md-input'}}) }}
+                    </div>
+                </div>
+                <div class="uk-width-1-2">
+                    <div class="uk-form-row">
+                        {{ form_label(form.quantity, null, {'label_attr': {'class': 'uk-form-label'}}) }}
+                        {{ form_widget(form.quantity, {'attr': {'class': 'md-input'}}) }}
+                    </div>
+                </div>
+            </div>
+            <div class="uk-grid uk-grid-medium" data-uk-grid-margin>
+                <div class="uk-width-1-2">
+                    <div class="uk-form-row">
+                        {{ form_label(form.supplier, null, {'label_attr': {'class': 'uk-form-label'}}) }}
+                        {{ form_widget(form.supplier, {'attr': {'class': 'md-input'}}) }}
+                    </div>
+                </div>
+                <div class="uk-width-1-2">
+                    <div class="uk-form-row">
+                        {{ form_label(form.store, null, {'label_attr': {'class': 'uk-form-label'}}) }}
+                        {{ form_widget(form.store, {'attr': {'class': 'md-input'}}) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="uk-modal-footer uk-text-right">
+            <button type="button" class="md-btn md-btn-flat uk-modal-close">
+                <i class="fa fa-arrow-left"></i>
+                {{ "button.close"|trans }}
+            </button>
+            <button class="md-btn md-btn-success" type="submit">
+                {% if agenda is defined %}
+                    {{ 'button.update'|trans }}
+                {% else %}
+                    {{ 'button.add'|trans }}
+                {% endif %}
+                <i class="fa fa-check"></i>
+            </button>
+        </div>
+    {{ form_end(form) }}
+</div>

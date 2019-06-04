@@ -1,0 +1,20 @@
+{% trans_default_domain 'messages' %}
+
+{% extends 'AdminBundle:Inventory:layout.html.twig' %}
+
+{% block title %}{{ parent() }} - {{ "inventory.brand.update"|trans|capitalize }} {% endblock %}
+
+{% block breadcrumbmodule %}
+	{{ parent() }}
+    <a href=" {{ url('admin_inventory_brand_list') }} ">
+       {{ 'inventory.brand.list'|trans|capitalize }}
+    </a>
+	<i class="fa fa-chevron-right"></i>
+	<em>{{ "inventory.brand.update"|trans|capitalize }}</em>
+{% endblock %}
+
+{% block content %}
+    <div id="page_content_inner">
+        {% include 'AdminBundle:Inventory:form_brand.html.twig' with { 'form': form, 'brand': brand } %}
+    </div>
+{% endblock %}

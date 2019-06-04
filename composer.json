@@ -1,0 +1,30 @@
+{
+	"name" : "webundle/puzzle-admin-bundle",
+	"description" : "Manage dashboard",
+	"type" : "symfony-bundle",
+	"authors" : [{
+			"name" : "AGNES Gnagne Cedric",
+			"email" : "cecenho55@gmail.com"
+		}
+	],
+	"keywords" : [
+		"dashboard admin"
+	],
+	"license" : "MIT",
+	"require" : {
+		"php" : ">=5.5.9",
+		"puzzle/admin-bundle" : "^1.0",
+		"puzzle/media-bundle" : "^1.0"
+	},
+	"autoload" : {
+		"psr-0" : {
+			"Puzzle\\UserBundle" : ""
+		}
+	},
+	"target-dir" : "Puzzle/UserBundle",
+	"extra" : {
+		"branch-alias" : {
+			"dev-master" : "1.0-dev"
+		}
+	}
+}

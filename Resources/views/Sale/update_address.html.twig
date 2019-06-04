@@ -1,0 +1,8 @@
+{% trans_default_domain 'messages' %}
+
+<div class="uk-modal-dialog">
+    <div class="uk-modal-header">
+        <h3>{{ "sale.address.update"|trans }}</h3>
+    </div>
+    {% include 'AdminBundle:Sale:form_address.html.twig' with {'form': form, 'address': address} %}
+</div>

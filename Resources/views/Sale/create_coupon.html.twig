@@ -1,0 +1,30 @@
+{% trans_default_domain 'messages' %}
+
+{% extends 'AdminBundle:Sale:layout.html.twig' %}
+
+{% block title %}{{ parent() }} - {{ "sale.coupon.create"|trans|capitalize }} {% endblock %}
+
+{% block breadcrumbmodule %}
+	{{ parent() }}
+    <a href=" {{ url('admin_sale_coupon_list') }} ">
+       {{ 'sale.coupon.list'|trans|capitalize }}
+    </a>
+	<i class="fa fa-chevron-right"></i>
+	<em>{{ "sale.coupon.create"|trans|capitalize }}</em>
+{% endblock %}
+
+{% block content %}
+    <div id="page_content_inner">
+        {% include 'AdminBundle:Sale:form_coupon.html.twig' with { 'form': form } %}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        var $kUI_multiselect_users = $('#kUI_multiselect_users');
+        if($kUI_multiselect_users.length) {
+            $kUI_multiselect_users.kendoMultiSelect();
+        }
+    </script>
+{% endblock %}

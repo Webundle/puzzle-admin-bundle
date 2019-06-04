@@ -1,0 +1,24 @@
+{% trans_default_domain 'user' %}
+
+{{ form_start(form, {'class': 'uk-form-stacked'}) }}
+    <div class="uk-form-row">
+        {{ form_label(form.name, 'user.group.form.name'|trans, {'label_attr': {'class': 'uk-form-label'}}) }}
+        {{ form_widget(form.name, {'attr': {'class': 'md-input'}}) }}
+    </div>
+    <div class="uk-form-row">
+        {{ form_label(form.description, 'user.group.form.description'|trans, {'label_attr': {'class': 'uk-form-label'}}) }}
+        {{ form_widget(form.description, {'attr': {'class': 'md-input', 'rows': 3, 'cols': 10, 'required': false}}) }}
+    </div>
+    <div class="uk-form-row">
+        {{ form_label(form.users, 'user.group.form.users'|trans, {'label_attr': {'class': 'uk-form-label'}}) }}
+        {{ form_widget(form.users, {'id': 'kUI_multiselect_users'}) }}
+    </div>
+   
+    <div class="uk-modal-footer uk-text-right">
+        <button type="button" class="md-btn md-btn-flat uk-modal-close">{{ "user.group.form.cancel"|trans }}</button>
+        <button class="md-btn md-btn-success" type="submit">
+            {{ group is defined ? 'user.group.form.update'|trans : 'user.group.form.create'|trans }}
+        </button>
+    </div>
+{{ form_end(form) }}
+

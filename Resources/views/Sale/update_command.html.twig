@@ -1,0 +1,75 @@
+{% trans_default_domain 'messages' %}
+
+{% extends 'AdminBundle:Sale:layout.html.twig' %}
+
+{% block title %}{{ parent() }} - {{ "sale.command.update"|trans|capitalize }} {% endblock %}
+
+{% block breadcrumbmodule %}
+	{{ parent() }}
+    <a href=" {{ url('admin_sale_command_list') }} ">
+       {{ 'sale.command.list'|trans|capitalize }}
+    </a>
+	<i class="fa fa-chevron-right"></i>
+	<em>{{ "sale.command.update"|trans|capitalize }}</em>
+{% endblock %}
+
+{% block content %}
+    <div id="page_content_inner">
+        {% include 'AdminBundle:Sale:form_command.html.twig' with { 'form': form, 'command': command } %}
+    </div>
+{% endblock %}
+
+
+{% block javascripts %}
+	{{ parent() }}
+	<script type="text/javascript">
+	var $collectionHolder;
+
+	// setup an "add a tag" link
+	var $addTagButton = $('<div class="md-card-footer uk-text-center uk-margin-top"><button type="button" class="add_tag_link md-btn md-btn-link">Ajouter une ligne</button></div>');
+	var $newLinkLi = $('<div></div>').append($addTagButton);
+
+	jQuery(document).ready(function() {
+		$collectionHolder = $('div.lines');
+		$collectionHolder.append($newLinkLi);
+		$collectionHolder.data('index', $collectionHolder.find(':input').length);
+		$addTagButton.on('click', function(e) {
+			addCommandLineForm($collectionHolder, $newLinkLi);
+
+			$collectionHolder.find('label').addClass('uk-form-label');
+			$collectionHolder.find('input').addClass('md-input');
+			$collectionHolder.find('select').addClass('md-input');
+
+			$collectionHolder.find('label').closest('div').addClass('uk-width-large-2-5 uk-margin-bottom');
+			$collectionHolder.find('input').closest('div').addClass('uk-width-large-2-5 uk-margin-bottom');
+			$collectionHolder.find('select').closest('div').addClass('uk-width-large-2-5 uk-margin-bottom');
+		});
+	});
+
+	function addCommandLineForm($collectionHolder, $newLinkLi) {
+	    var prototype = $collectionHolder.data('prototype');
+	    var index = $collectionHolder.data('index');
+	    var newForm = prototype;
+
+	    newForm = newForm.replace(/__name__/g, index);
+	    $collectionHolder.data('index', index + 1);
+
+	    var $newFormLi = $('<div class="uk-form-row"></div>').append(newForm);
+	    $newLinkLi.before($newFormLi);
+
+		var $newFormLiDiv = $('#admin_sale_command_update_commandLines_' + index);
+		addTagFormDeleteLink($newFormLiDiv);
+		$newFormLiDiv.addClass('uk-grid uk-grid-medium').attr(' data-uk-grid-margin', null);
+	}
+
+	function addTagFormDeleteLink($tagFormLi) {
+	    var $removeFormButton = $('<div class="uk-width-large-1-5 uk-margin-bottom"><button type="button" class="md-btn md-btn-flat-danger">Delete</button></div>');
+	    $tagFormLi.append($removeFormButton);
+
+	    $removeFormButton.on('click', function(e) {
+	        // remove the li for the tag form
+	        $tagFormLi.remove();
+	    });
+	}
+	</script>
+{% endblock %}

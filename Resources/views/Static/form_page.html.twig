@@ -1,0 +1,46 @@
+{% trans_default_domain 'static' %}
+
+{{ form_start(form, {'method': 'POST'}) }}
+    <div class="uk-grid uk-grid-medium" data-uk-grid-margin>
+        <div class="uk-width-large-7-10">
+            <div class="md-card">
+                <div class="md-card-content">
+                    <div class="uk-grid uk-grid-divider uk-grid-medium" data-uk-grid-margin>
+                        <div class="uk-width-large-1-1">
+                            <div class="uk-form-row">
+                                {{ form_label(form.name, 'static.page.form.name'|trans, {'label_attr': {'class': 'uk-form-label'}}) }}
+                                {{ form_widget(form.name, {'attr': {'class': 'md-input'}}) }}
+                            </div>
+                            <div class="uk-form-row">
+                                <div>
+                                    {{ form_widget(form.content, {'id': 'wysiwyg_ckeditor'}) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="uk-width-large-3-10">
+            <div class="md-card">
+                <div class="md-card-content">
+                    <div class="uk-form-row">
+                        {{ form_label(form.template, 'static.page.form.template'|trans, {'label_attr': {'class': 'uk-form-label'}}) }}
+                        {{ form_widget(form.template, {'attr' : {'data-md-selectize': true}}) }}
+                    </div>
+                </div>
+            </div>
+            
+            {{ render(controller('MediaBundle:Admin:embedFile', {'formData': form.picture, 'data': page is defined ? page.picture : null, 'type': 'picture', 'context': 'cms/page', 'multiple': false })) }}
+        </div>
+    </div>
+    <div class="uk-margin-top uk-text-center">
+        <a href="{{ url('puzzle_admin_static_page_list') }}" class="md-btn">
+            {{ 'static.page.form.cancel'|trans }}
+        </a>
+        <button class="md-btn md-btn-success" type="submit">
+            {{ page is defined ? 'static.page.form.update'|trans : 'static.page.form.create'|trans }}
+        </button>
+    </div>
+{{ form_end(form) }}

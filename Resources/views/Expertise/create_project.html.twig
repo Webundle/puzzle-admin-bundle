@@ -1,0 +1,20 @@
+{% trans_default_domain 'messages' %}
+
+{% extends 'AdminBundle:Expertise:layout.html.twig' %}
+
+{% block title %}{{ parent() }} - {{ "expertise.project.create"|trans|capitalize }} {% endblock %}
+
+{% block breadcrumbmodule %}
+    {{ parent() }}
+    <a href=" {{ url('admin_expertise_project_list') }} ">
+       {{ 'expertise.project.list'|trans|capitalize }}
+    </a>
+    <i class="fa fa-chevron-right"></i>
+    <em>{{ "expertise.project.create"|trans|capitalize }}</em>
+{% endblock %}
+
+{% block content %}
+    <div id="page_content_inner">
+        {% include 'AdminBundle:Expertise:form_project.html.twig' with { 'form' : form } %}
+    </div>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% trans_default_domain 'messages' %}
+
+{% extends 'AdminBundle:Sale:layout.html.twig' %}
+
+{% block title %}{{ parent() }} - {{ "sale.shipping.update"|trans|capitalize }} {% endblock %}
+
+{% block breadcrumbmodule %}
+	{{ parent() }}
+    <a href=" {{ url('admin_sale_shipping_list') }} ">
+       {{ 'sale.shipping.list'|trans|capitalize }}
+    </a>
+	<i class="fa fa-chevron-right"></i>
+	<em>{{ "sale.shipping.update"|trans|capitalize }}</em>
+{% endblock %}
+
+{% block content %}
+    <div id="page_content_inner">
+        {% include 'AdminBundle:Sale:form_shipping.html.twig' with { 'form': form, 'shipping': shipping } %}
+    </div>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% trans_default_domain 'messages' %}
+
+{% extends 'AdminBundle:Expertise:layout.html.twig' %}
+
+{% block title %}{{ parent() }} - {{ "expertise.staff.create"|trans|capitalize }} {% endblock %}
+
+{% block breadcrumbmodule %}
+    {{ parent() }}
+    <a href=" {{ url('admin_expertise_staff_list') }} ">
+       {{ 'expertise.staff.list'|trans|capitalize }}
+    </a>
+    <i class="fa fa-chevron-right"></i>
+    <em>{{ "expertise.staff.create"|trans|capitalize }}</em>
+{% endblock %}
+
+{% block content %}
+    <div id="page_content_inner">
+        {% include 'AdminBundle:Expertise:form_staff.html.twig' with { 'form' : form } %}
+    </div>
+{% endblock %}

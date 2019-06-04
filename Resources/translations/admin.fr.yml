@@ -1,0 +1,6 @@
+admin:
+    title : 'Adminstration'
+    role: 'Accéder au dashboard'
+    dashboard:
+        navigation: 'Tableau de bord'
+        title: 'Tableau de bord'

@@ -1,0 +1,76 @@
+{% trans_default_domain 'user' %}
+
+{% extends 'AdminBundle:User:layout.html.twig' %}
+
+{% block title %}{{ parent() }} - {{ "user.account.update.title"|trans|capitalize }} {{ user }} {% endblock %}
+
+
+{% block breadcrumbmodule %}
+    {{ parent() }}
+    <em>{{ "user.account.profile.update_settings"|trans|capitalize }}</em>
+{% endblock %}
+
+{% block content %}
+    <div id="page_content_inner">
+        {{ form_start(form, {'attr': {'class': 'uk-form-stacked'}}) }}
+            <div class="uk-width-medium-5-10 uk-container-center">
+                <div class="md-card">
+                    <div class="md-card-content">
+                        <div class="uk-form-row">
+                            {{ form_label(form.lastName, 'user.account.form.last_name'|trans, {'label_attr': {'class': 'uk-form-label'}}) }}
+                            {{ form_widget(form.lastName, {'attr': {'class': 'md-input'}}) }}
+                        </div>
+                        <div class="uk-form-row">
+                            {{ form_label(form.firstName, 'user.account.form.first_name'|trans, {'label_attr': {'class': 'uk-form-label'}}) }}
+                            {{ form_widget(form.firstName, {'attr': {'class': 'md-input'}}) }}
+                        </div>
+                        <div class="uk-form-row">
+                            {{ form_label(form.phoneNumber, 'user.account.form.phone_number'|trans, {'label_attr': {'class': 'uk-form-label'}}) }}
+                            {{ form_widget(form.phoneNumber, {'attr': {'class': 'md-input'}}) }}
+                        </div>
+                        <div class="uk-form-row">                        
+                            {{ form_label(form.email, 'user.account.form.email'|trans, {'label_attr': {'class': 'uk-form-label'}}) }}
+                            {{ form_widget(form.email, {'attr': {'class': 'md-input'}}) }}
+                        </div>
+                        <div class="uk-form-row">
+                            {{ form_label(form.username, 'user.account.form.username'|trans, {'label_attr': {'class': 'uk-form-label'}}) }}
+                            {{ form_widget(form.username, {'attr': {'class': 'md-input'}}) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="uk-text-center uk-margin-top">
+                <a class="md-btn md-btn-default" href="{{ url('puzzle_admin_user_account_show_profile') }}">
+                    {{ 'user.account.form.cancel'|trans }}
+                </a>
+                <button class="md-btn md-btn-success" type="submit">
+                    {{ 'user.account.form.update'|trans }}
+                </button>
+            </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts
+        'bundles/admin/js/kendoui_custom.js'
+        'bundles/admin/js/kendoui.js'
+
+        output="compile/js/admin_user_update.min.js" 
+        %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    <script type="text/javascript">
+        // Datetime Picker
+        $("#credentials_expires_at, #account_expires_at").kendoDateTimePicker({
+            format: "dd-MM-yyyy HH:mm"
+        });
+    </script>
+    <script type="text/javascript">
+        var $kUI_multiselect_roles = $('#kUI_multiselect_roles');
+        if($kUI_multiselect_roles.length) {
+            $kUI_multiselect_roles.kendoMultiSelect();
+        }
+    </script>
+{% endblock %}

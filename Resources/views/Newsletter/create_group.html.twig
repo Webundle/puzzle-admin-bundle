@@ -1,0 +1,19 @@
+{% trans_default_domain 'messages' %}
+
+<div class="uk-modal-dialog">
+    <div class="uk-modal-header">
+        <h3>{{ "newsletter.group.create"|trans }}</h3>
+    </div>
+    <div class="uk-modal-body">
+        {% include 'AdminBundle:Newsletter:form_group.html.twig' with {'form': form} %}
+    </div>
+</div>
+
+<script type="text/javascript">
+    var $kUI_multiselect_subscribers = $('#kUI_multiselect_subscribers');
+    if($kUI_multiselect_subscribers.length) {
+        $kUI_multiselect_subscribers.kendoMultiSelect();
+    }
+</script>
+
+

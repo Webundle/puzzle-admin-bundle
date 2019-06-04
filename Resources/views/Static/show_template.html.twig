@@ -1,0 +1,33 @@
+{% trans_default_domain 'static' %}
+
+<div class="uk-modal-dialog">
+	<div class="uk-modal-header">
+        <h3>{{ "static.template.show.title"|trans }}</h3>
+    </div>
+    <div class="uk-modal-body">
+        <div class="uk-width-1-1">
+            <div class="uk-margin-small-bottom">
+                <label class="uk-text-bold">{{ 'static.template.show.name'|trans }}</label> :
+                {{ template.name }}
+            </div>
+            <div class="uk-margin-small-bottom">
+                <label class="uk-text-bold">{{ 'static.template.show.created_at'|trans }}</label> :
+                <span>{{ date_time_ago(template.createdAt) }}</span>
+            </div>
+            <div class="uk-margin-small-bottom">
+                <label class="uk-text-bold">{{ 'static.template.show.updated_at'|trans }}</label> :
+                <span>{{ date_time_ago(template.updatedAt) }}</span>
+            </div>
+            <div class="uk-margin-small-bottom">
+                <label class="uk-text-bold">{{ 'static.template.show.author'|trans }}</label> :
+                <span>{{ template.createdBy }}</span>
+            </div>
+        </div>
+    </div>
+    <div class="uk-modal-footer uk-text-right">
+        <button type="button" class="md-btn md-btn-flat uk-modal-close">{{ "static.template.show.close"|trans }}</button>
+        <a class="md-btn md-btn-success" href="{{ url('puzzle_admin_static_template_update', {'id': template.id}) }}">
+            {{ 'static.template.show.update'|trans }}
+        </a>
+    </div>
+</div>

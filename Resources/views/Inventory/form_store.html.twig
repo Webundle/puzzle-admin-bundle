@@ -1,0 +1,35 @@
+{% trans_default_domain 'messages' %}
+
+<div class="uk-width-medium-6-10 uk-container-center">
+   {{ form_start(form) }}
+		<div class="md-card">
+            <div class="md-card-content">
+                <div class="uk-form-row">
+                    {{ form_label(form.name, null, {'label_attr': {'class': 'uk-form-label'}}) }}
+                    {{ form_widget(form.name, {'attr': {'class': 'md-input'}}) }}
+                </div>
+                <div class="uk-form-row">
+                    {{ form_label(form.location, null, {'label_attr': {'class': 'uk-form-label'}}) }}
+                    {{ form_widget(form.location, {'attr': {'class': 'md-input'}}) }}
+                </div>
+            </div>
+        </div>
+
+        {{ render(controller('MediaBundle:Admin:embedFile', {'formData': form.picture, 'data': store is defined ? store.picture : null, 'type': 'picture', 'context': 'inventory/store', 'multiple': false })) }}
+
+        <div class="uk-text-center uk-margin-top">
+            <a class="md-btn md-btn-default" href="{{ url('admin_inventory_store_list') }}">
+                <i class="fa fa-arrow-left"></i>
+                {{ 'button.cancel'|trans }}
+            </a>
+            <button class="md-btn md-btn-success" type="submit">
+                {% if store is defined %}
+                    {{ 'button.update'|trans }}
+                {% else %}
+                    {{ 'button.add'|trans }}
+                {% endif %}
+                <i class="fa fa-check"></i>
+            </button>
+        </div>
+    {{ form_end(form) }}
+</div>

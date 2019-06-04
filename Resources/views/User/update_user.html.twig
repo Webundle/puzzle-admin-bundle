@@ -1,0 +1,44 @@
+{% trans_default_domain 'user' %}
+
+{% extends 'AdminBundle:User:layout.html.twig' %}
+
+{% block title %}{{ parent() }} - {{ "user.account.update.title"|trans|capitalize }} {{ user }} {% endblock %}
+
+{% block breadcrumbmodule %}
+    {{ parent() }}
+    <a href=" {{ url('puzzle_admin_user_list') }} ">
+       {{ 'user.account.list.title'|trans|capitalize }}
+    </a>
+    <i class="fa fa-chevron-right"></i>
+    <em>{{ "user.account.update.title"|trans|capitalize }}</em>
+{% endblock %}
+
+{% block content %}
+    <div id="page_content_inner">
+        {% include 'AdminBundle:User:form_user.html.twig' with { 'form': form, 'user': user } %}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts
+        'bundles/admin/js/kendoui_custom.js'
+        'bundles/admin/js/kendoui.js'
+
+        output="compile/js/admin_user_update.min.js" 
+        %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    <script type="text/javascript">
+        // Datetime Picker
+        $("#credentials_expires_at, #account_expires_at").kendoDateTimePicker({
+            format: "dd-MM-yyyy HH:mm"
+        });
+    </script>
+    <script type="text/javascript">
+        var $kUI_multiselect_roles = $('#kUI_multiselect_roles');
+        if($kUI_multiselect_roles.length) {
+            $kUI_multiselect_roles.kendoMultiSelect();
+        }
+    </script>
+{% endblock %}

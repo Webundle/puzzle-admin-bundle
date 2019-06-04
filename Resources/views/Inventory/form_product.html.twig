@@ -1,0 +1,151 @@
+{% trans_default_domain 'messages' %}
+
+{{ form_start(form, {'attr': {'id': 'form_validation', 'class': 'uk-form-stacked'}}) }}
+    <div class="uk-grid uk-grid-medium" data-uk-grid-margin>
+        <div class="uk-width-xLarge-7-10 uk-width-large-7-10">
+            <div class="md-card">
+              <div class="md-card-content">
+                  <div class="uk-grid uk-grid-medium" data-uk-grid-margin>
+                        <div class="uk-width-1-1">
+                            <div class="uk-form-row">
+                                {{ form_label(form.name, null, {'label_attr': {'class' : 'uk-form-label'}}) }}
+                                {{ form_widget(form.name, {'attr' : {'class': 'md-input'}}) }}
+                            </div>
+                        </div>
+                        <div class="uk-width-1-2">
+                            <div class="uk-width-1-1">
+                              <div class="uk-form-row">
+                                  {{ form_label(form.buyingPrice, null, {'label_attr': {'class' : 'uk-form-label'}}) }}
+                                  {{ form_widget(form.buyingPrice, {'attr' : {'class': 'md-input'}}) }}
+                              </div>
+                              <div class="uk-form-row">
+                                  {{ form_label(form.costPrice, null, {'label_attr': {'class' : 'uk-form-label'}}) }}
+                                  {{ form_widget(form.costPrice, {'attr' : {'class': 'md-input'}}) }}
+                              </div>
+                              <div class="uk-form-row">
+                                  {{ form_label(form.sellingPrice, null, {'label_attr': {'class' : 'uk-form-label'}}) }}
+                                  {{ form_widget(form.sellingPrice, {'attr' : {'class': 'md-input'}}) }}
+                              </div>
+                              <div class="uk-form-row">
+                                  {{ form_label(form.reducedPrice, null, {'label_attr': {'class' : 'uk-form-label'}}) }}
+                                  {{ form_widget(form.reducedPrice, {'attr' : {'class': 'md-input'}}) }}
+                              </div>
+                          </div>
+                      </div>
+                    <div class="uk-width-1-2">
+                        <div class="uk-width-large-1-1">
+                            {# <div class="uk-form-row">
+                                <div class="uk-input-group">
+                                    <span class="uk-input-group-addon">
+                                        <i class="fa fa-barcode"></i>
+                                    </span>
+                                    {{ form_label(form.code, null, {'label_attr': {'class' : 'uk-form-label'}}) }}
+                                    {{ form_widget(form.code, {'attr' : {'class': 'md-input'}}) }}
+                                </div>
+                            </div> #}
+                            {# <div class="uk-form-row">
+                                <div class="uk-input-group">
+                                    <span class="uk-input-group-addon">
+                                        <i class="fa fa-cubes"></i>
+                                    </span>
+                                    {{ form_label(form.stock, null, {'label_attr': {'class' : 'uk-form-label'}}) }}
+                                    {{ form_widget(form.stock, {'attr' : {'class': 'md-input'}}) }}
+                                </div>
+                            </div> #}
+                            <div class="uk-form-row">
+                                {{ form_label(form.alertStock, null, {'label_attr': {'class' : 'uk-form-label'}}) }}
+                                {{ form_widget(form.alertStock, {'attr' : {'class': 'md-input'}}) }}
+                            </div>
+                            <div class="uk-form-row">
+                                {{ form_label(form.deliveryStock, null, {'label_attr': {'class' : 'uk-form-label'}}) }}
+                                {{ form_widget(form.deliveryStock, {'attr' : {'class': 'md-input'}}) }}
+                            </div>
+                            <div class="uk-form-row">
+                                {{ form_label(form.limitCommand, null, {'label_attr': {'class' : 'uk-form-label'}}) }}
+                                {{ form_widget(form.limitCommand, {'attr' : {'class': 'md-input'}}) }}
+                            </div>
+
+                            <div class="uk-form-row">
+                                {{ form_label(form.reductionExpiredAt, null, {'label_attr': {'class' : 'uk-form-label'}}) }}
+                                {% if product is not defined or product.reductionExpiredAt is empty %}
+                                    {{ form_widget(form.reductionExpiredAt, {'attr': {'class': 'datepicker'}}) }}
+                                {% else %}
+                                    {{ form_widget(form.reductionExpiredAt, {'attr': {'class': 'datepicker'}, 'value' : product.reductionExpiredAt|date('Y-m-d H:i') }) }}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+            <div class="md-card">
+                <div class="md-card-content">
+                    <div class="uk-grid uk-grid-divider uk-grid-medium" data-uk-grid-margin>
+                        <div class="uk-width-large-1-1">
+                            <div class="uk-form-row">
+                                {{ form_widget(form.description, { 'id': 'wysiwyg_ckeditor', 'attr' : { 'class' : 'md-input' } }) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="uk-width-xLarge-3-10 uk-width-large-3-10">
+        	<div class="md-card">
+                <div class="md-card-content">
+                    <div class="uk-form-row">
+                        {{ form_label(form.category, null, {'label_attr': {'class' : 'uk-form-label'}}) }}
+                        {{ form_widget(form.category, {'attr': {'data-md-selectize' : true}}) }}
+                    </div>
+                    <div class="uk-form-row">
+                        {{ form_label(form.brand, null, {'label_attr': {'class' : 'uk-form-label'}}) }}
+                        {{ form_widget(form.brand, {'attr': {'data-md-selectize' : true}}) }}
+                    </div>
+                    <div class="uk-form-row">
+                        {{ form_label(form.suppliers, null, {'label_attr': {'class' : 'uk-form-label'}}) }}
+                        {{ form_widget(form.suppliers, {'attr': {'data-md-selectize' : true}}) }}
+                    </div>
+                    <div class="uk-form-row">
+                        {{ form_label(form.stores, null, {'label_attr': {'class' : 'uk-form-label'}}) }}
+                        {{ form_widget(form.stores, {'attr': {'data-md-selectize' : true}}) }}
+                    </div>
+                    <div class="uk-form-row">
+                        {{ form_label(form.tags, null, {'label_attr': {'class' : 'uk-form-label'}}) }}
+                        {% if product is defined and product.tags is not empty %}
+                            {{ form_widget(form.tags, {'attr': {'data-role' : 'materialtags'}, 'value': product.tags|join(',')}) }}
+                        {% else %}
+                            {{ form_widget(form.tags, {'attr': {'data-role' : 'materialtags'}}) }}
+                        {% endif %}
+                    </div>
+                    <div class="uk-form-row">
+                        <div class="uk-float-right">
+                            {{ form_widget(form.visible, {'attr': {'data-switchery' : true}}) }}
+                        </div>
+                        {{ form_label(form.visible, null, {'label_attr': {'class' : 'uk-form-label'}}) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="uk-width-1-1 uk-text-center uk-margin-top">
+            {% if product is defined %}
+                <a class="md-btn md-btn-default" href="{{ url('admin_inventory_product_show', {'id': product.id}) }}">
+                    <i class="fa fa-arrow-left"></i>
+                    {{ 'button.cancel'|trans }}
+                </a>
+                <button class="md-btn md-btn-success" type="submit">
+                    {{ 'button.update'|trans }}
+                    <i class="fa fa-check"></i>
+                </button>
+            {% else %}
+                <a class="md-btn md-btn-default" href="{{ url('admin_inventory_product_list') }}">
+                    <i class="fa fa-arrow-left"></i>
+                    {{ 'button.cancel'|trans }}
+                </a>
+                <button class="md-btn md-btn-success" type="submit">
+                    {{ 'button.add'|trans }}
+                    <i class="fa fa-check"></i>
+                </button>
+            {% endif %}
+        </div>
+    </div>
+{{ form_end(form) }}
