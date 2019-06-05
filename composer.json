@@ -13,15 +13,42 @@
 	"license" : "MIT",
 	"require" : {
 		"php" : ">=5.5.9",
-		"puzzle/admin-bundle" : "^1.0",
+		"coresphere/console-bundle" : "^0.5.0",
+		"dg/rss-php" : "^1.3",
+		"doctrine/doctrine-bundle" : "^1.6",
+		"doctrine/orm" : "^2.5",
+		"friendsofsymfony/jsrouting-bundle" : "^2.2",
+		"incenteev/composer-parameter-handler" : "^2.0",
+		"jms/job-queue-bundle" : "^2.0",
+		"jms/security-extra-bundle" : "^1.6",
+		"knplabs/doctrine-behaviors" : "~1.1",
+		"knplabs/knp-paginator-bundle" : "^2.7",
+		"liip/imagine-bundle" : "^2.1",
+		"mpdf/mpdf" : "^7.0",
+		"pagerfanta/pagerfanta" : "v2.1.^",
+		"sensio/distribution-bundle" : "^5.0.19",
+		"sensio/framework-extra-bundle" : "^5.0.0",
+		"setasign/fpdf" : "^1.8",
+		"symfony/assetic-bundle" : "^2.8",
+		"symfony/monolog-bundle" : "^3.1.0",
+		"symfony/polyfill-apcu" : "^1.0",
+		"symfony/swiftmailer-bundle" : "^2.6.4",
+		"symfony/symfony" : "3.4.*",
+		"symfony/templating" : "^4.1",
+		"symfony/translation" : "^4.1",
+		"twig/twig" : "^1.0||^2.0",
+		"webchemistry/invoice" : "^1.1",
+		"nelexa/zip" : "^3.1",
+		"jimmiw/php-time-ago" : "^3.0",
+		"puzzle/user-bundle" : "^1.0",
 		"puzzle/media-bundle" : "^1.0"
 	},
 	"autoload" : {
 		"psr-0" : {
-			"Puzzle\\UserBundle" : ""
+			"Puzzle\\AdminBundle" : ""
 		}
 	},
-	"target-dir" : "Puzzle/UserBundle",
+	"target-dir" : "Puzzle/AdminBundle",
 	"extra" : {
 		"branch-alias" : {
 			"dev-master" : "1.0-dev"
