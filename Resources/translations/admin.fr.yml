@@ -4,3 +4,12 @@ admin:
     dashboard:
         navigation: 'Tableau de bord'
         title: 'Tableau de bord'
+    modal:
+        delete:
+            description: 'Etes-vous sur de vouloir supprimer'
+            close: 'Fermer'
+            confirm: 'Supprimer'
+        delete_list:
+            description: 'Etes-vous sur de vouloir supprimer la sélection'
+            close: 'Fermer'
+            confirm: 'Supprimer'

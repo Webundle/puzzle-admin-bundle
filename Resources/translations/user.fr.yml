@@ -143,6 +143,7 @@ user:
             show: 'Mon profil'
             update_settings: 'Modifier mes paramètres'
             update_password: 'Modifier mon mot de passe'
+            logout: 'Déconnexion'
         enable:
             title: 'Réactivation de votre compte'
             message: |

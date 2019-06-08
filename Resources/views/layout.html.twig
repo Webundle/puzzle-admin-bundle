@@ -66,7 +66,7 @@
                                 <li>
                                     <a href="{{ url('logout') }}">
                                     <i class="fa fa-sign-out"></i>
-                                    {{ 'user.account.logout'|trans }}
+                                    {{ 'user.account.profile.logout'|trans({}, 'user') }}
                                     </a>
                                 </li>
 							</ul>
@@ -110,6 +110,16 @@
             <input type="hidden" class="alert-flash" data-message="<i class='fa fa-check-circle'></i> <b>{{ message }}</b>" data-status="success" data-pos="top-right" data-timeout="2000">
 		{% endfor %}
 	{% endif %}
+	{% if app.session.flashBag.has('warning') is not empty %}
+		{% for message in app.session.flashBag.get('danger') %}
+            <input type="hidden" class="alert-flash" data-message="<i class='fa fa-warning'></i> <b>{{ message }}</b>" data-status="warning" data-pos="top-right" data-timeout="2000">
+		{% endfor %}
+	{% endif %}
+	{% if app.session.flashBag.has('danger') is not empty %}
+		{% for message in app.session.flashBag.get('danger') %}
+            <input type="hidden" class="alert-flash" data-message="<i class='fa fa-times'></i> <b>{{ message }}</b>" data-status="error" data-pos="top-right" data-timeout="2000">
+		{% endfor %}
+	{% endif %}
 {% endblock %}
 
 
@@ -136,22 +146,22 @@
     <div class="uk-modal" id="remove_item_modal">
         <div class="uk-modal-dialog">
             <div class="uk-margin-medium-bottom uk-text-center">
-                <h3 id="remove_item_text">{{ "layout.delete"|trans }}</span> <span id="remove_item_label"></span> ?</h3>
+                <h3 id="remove_item_text">{{ 'admin.modal.delete.description'|trans }}</span> <span id="remove_item_label"></span> ?</h3>
             </div>
             <div class="uk-modal-footer uk-text-center">
-                <button type="button" class="md-btn uk-modal-close">{{ "button.close"|trans }}</button>
-                <a href="#" class="md-btn md-btn-danger" id="remove_item_url">{{ "button.remove"|trans }}</a>
+                <button type="button" class="md-btn uk-modal-close">{{ 'admin.modal.delete.close'|trans }}</button>
+                <a href="#" class="md-btn md-btn-danger" id="remove_item_url">{{ 'admin.modal.delete.confirm'|trans }}</a>
             </div>
         </div>
     </div>
      <div class="uk-modal" id="delete-list-modal">
         <div class="uk-modal-dialog">
             <div class="uk-margin-medium-bottom uk-text-center">
-                <h3>{{ "layout.delete_list"|trans|capitalize }} ?</h3>
+                <h3>{{ 'admin.modal.delete_list.description'|trans|capitalize }} ?</h3>
             </div>
             <div class="uk-modal-footer uk-text-center">
-                <button type="button" class="md-btn uk-modal-close">{{ "button.close"|trans }}</button>
-                <a href="#" class="md-btn md-btn-danger" id="delete-list-btn">{{ "button.remove"|trans }}</a>
+                <button type="button" class="md-btn uk-modal-close">{{ 'admin.modal.delete_list.close'|trans }}</button>
+                <a href="#" class="md-btn md-btn-danger" id="delete-list-btn">{{ 'admin.modal.delete_list.confirm'|trans }}</a>
             </div>
         </div>
     </div>
@@ -270,7 +280,7 @@
                         "destroy": true,
                         "sPaginationType" : "full_numbers",
                         "language" : {
-                            "url": "{{ asset('bundles/admin/libs/datatables/media/lang/dataTables.'~app.request.locale ~'.json') }}"
+                            "url": "{{ asset('bundles/admin/lang/datatables/'~app.request.locale ~'.json') }}"
                         },
                         "columnDefs": [{
                             "targets": 'no-sort',
