@@ -70,9 +70,39 @@ security:
     role_hierarchy:
         ROLE_ADMIN: ROLE_USER
         ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+    
+    
+    firewalls:
+        admin_login:
+            pattern: ^%admi_prefix%login$
+            anonymous: ~
+
+        admin:
+            entry_point: admin.security.authentication_entry_point
+            pattern: '^%admin_prefix%'
+            host: '%admin_host%'
+            provider: chain_provider
+            access_denied_handler: security.access_denied_handler
+            form_login:
+                check_path: login_check
+                login_path: admin_login
+                success_handler: security.authentication_success_handler
+                failure_handler: security.authentication_failure_handler
+                csrf_token_generator: security.csrf.token_manager
+            logout:
+                path: /logout
+                target: admin_homepage
+                delete_cookies:
+                    REMEMBERME: { path: null, domain: null}
+            remember_me:
+                secret: "%secret%"
+                lifetime: 84400
+                path: admin_homepage
+                domain: ~
+                always_remember_me: true
 	...
     access_control:
-        - {path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - {path: ^%admin_prefix%login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - {path: ^%admin_prefix%, host: "%admin_host%", roles: ROLE_ADMIN }
 
 ```
@@ -93,10 +123,105 @@ fos_js_routing:
 ```
 
 ### **Step 5: Install bower components**
-Open CLI terminal and generate AdminBundle into src folder. After that, go into bundle folder and install bower components by typing:
+Overwrite, bower install folder by creating `.bowerrc` file in project folder root and typing into it:
 
 ```yaml
 ....
+{
+    "directory": "vendor/webundle/puzzle-admin-bundle/Puzzle/AdminBundle/Resources/public/libs/"
+}
+```
+Create `bower.json` file in project folder root and copy into it: 
+
+```yaml
+....
+{
+  "name": "webundle-puzzle-admin",
+  "version": "1.0.0",
+  "authors": [
+    "tzd"
+  ],
+  "description": "Webundle project",
+  "main": [
+    "index.php",
+    "assets/less/main.less",
+    "assets/js/altair_admin_common.js"
+  ],
+  "keywords": [
+    "admin",
+    "panel",
+    "material",
+    "design",
+    "dashboard"
+  ],
+  "license": "http://themeforest.net/licenses",
+  "homepage": "http://webundle.com",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "autosize": "~3.0.8",
+    "c3js-chart": "~0.4.10",
+    "clndr": "~1.2.14",
+    "codemirror": "~5.5.0",
+    "countUp.js": "~1.5.3",
+    "d3": "<=3.5.5",
+    "datatables": "~1.10.7",
+    "datatables-colvis": "~1.1.2",
+    "datatables-tabletools": "~2.2.4",
+    "dense": "*",
+    "fastclick": "~1.0.6",
+    "fitvids": "~1.1.0",
+    "fullcalendar": "~2.3.2",
+    "handlebars": "~3.0.3",
+    "ionrangeslider": "~2.0.12",
+    "jquery": "~2.1",
+    "jquery-icheck": "~1.0.2",
+    "jquery-mapael": "~1.0.1",
+    "jquery-mousewheel": "~3.1.13",
+    "jquery.dotdotdot": "~1.7.3",
+    "jquery.inputmask": "~3.1.63",
+    "jquery.easy-pie-chart": "~2.1.6",
+    "jquery.scrollbar": "~0.2.7",
+    "jquery-ui": "~1.11.4",
+    "kendo-ui-core": "~2015.2.720",
+    "magnific-popup": "~1.0.0",
+    "maplace.js": "~0.1.33",
+    "marked": "~0.3.3",
+    "metrics-graphics": "~2.6.0",
+    "modernizr": "~2.8.3",
+    "moment": "~2.10.3",
+    "parsleyjs": "~2.1.2",
+    "peity": "~3.2.0",
+    "prism": "gh-pages",
+    "selectize": "~0.12.1",
+    "switchery": "~0.8.1",
+    "uikit": "~2.21.0",
+    "velocity": "~1.2.1",
+    "weather-icons": "~1.3.2",
+    "jquery.actual": "~1.0.16",
+    "jquery-bez": "~1.0.11",
+    "waypoints": "~3.1.1",
+    "materialize-tags": "^1.2.3",
+    "fontawesome": "^4.0",
+    "jquery-typeahead": "^2.10.6",
+    "ckeditor": "^4.11.4"
+  },
+  "resolutions": {
+    "jquery": "~2.1",
+    "fastclick": "~1.0.6"
+  }
+}
+```
+
+In project folder root, install bower components by typing it in CLI:
+
+```yaml
 bower install
 ```
 
@@ -108,8 +233,6 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
 
-# Put parameters here that don't need to change on each machine where the app is deployed
-# http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: fr
 
@@ -133,7 +256,6 @@ framework:
     trusted_hosts:   ~
     trusted_proxies: ~
     session:
-        # handler_id set to null will use default session handler from php.ini
         handler_id:  ~
     fragments:       ~
     http_method_override: true
@@ -156,6 +278,7 @@ assetic:
     java: /usr/bin/java
     filters:
         cssrewrite: ~
+        
 # Doctrine Configuration
 doctrine:
     dbal:
@@ -166,7 +289,6 @@ doctrine:
         user:     "%database_user%"
         password: "%database_password%"
         charset:  UTF8
-
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
         naming_strategy: doctrine.orm.naming_strategy.underscore
@@ -203,7 +325,6 @@ knp_doctrine_behaviors:
     timestampable:  true
     sluggable:      true
     soft_deletable: true
-    # All others behaviors are disabled
     
 # Liip
 liip_imagine :
