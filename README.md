@@ -357,3 +357,10 @@ admin:
                 parent: ~
                 user_roles: ['ROLE_ADMIN']
 ```
+
+### **Step 7: Launch admin install**
+In project folder root, type:
+
+```yaml
+php bin/console puzzle:admin-install
+```

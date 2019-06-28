@@ -115,7 +115,7 @@
             <input type="hidden" class="alert-flash" data-message="<i class='fa fa-warning'></i> <b>{{ message }}</b>" data-status="warning" data-pos="top-right" data-timeout="2000">
 		{% endfor %}
 	{% endif %}
-	{% if app.session.flashBag.has('danger') is not empty %}
+	{% if app.session.flashBag.has('error') is not empty %}
 		{% for message in app.session.flashBag.get('error') %}
             <input type="hidden" class="alert-flash" data-message="<i class='fa fa-times'></i> <b>{{ message }}</b>" data-status="error" data-pos="top-right" data-timeout="2000">
 		{% endfor %}
@@ -274,7 +274,6 @@
                 
                 // Table
                 var t = document.getElementById('dt_individual_search');
-                
                 if (t != undefined && t != null) {
                     $('#dt_individual_search').DataTable({
                         "destroy": true,

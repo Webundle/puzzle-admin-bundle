@@ -34,7 +34,7 @@ class PuzzleRepository extends \Doctrine\ORM\EntityRepository
         int $limit = null, 
         int $offset = null
      ){
-         $query= self::customGetQuery($fields, $joins, $criteria, $orderBy, $limit, $offset);
+         $query = self::customGetQuery($fields, $joins, $criteria, $orderBy, $limit, $offset);
         return $query->getResult();
     }
     

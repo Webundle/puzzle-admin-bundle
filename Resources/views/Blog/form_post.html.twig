@@ -1,4 +1,4 @@
-{% trans_default_domain 'messages' %}
+{% trans_default_domain 'blog' %}
 
 {{ form_start(form, {'attr': {'id': 'form_validation', 'class': 'uk-form-stacked'}}) }}
     <div class="uk-grid uk-grid-medium" data-uk-grid-margin>
@@ -8,8 +8,12 @@
                     <div class="uk-grid uk-grid-divider uk-grid-medium" data-uk-grid-margin>
                         <div class="uk-width-large-1-1">
                             <div class="uk-form-row">
-                                {{ form_label(form.name, null, {'label_attr': {'class' : 'uk-form-label'}}) }}
+                                {{ form_label(form.name, 'blog.post.form.name'|trans, {'label_attr': {'class' : 'uk-form-label'}}) }}
                                 {{ form_widget(form.name, {'attr' : {'class': 'md-input'}}) }}
+                            </div>
+                            <div class="uk-form-row">
+                                {{ form_label(form.shortDescription, 'blog.post.form.short_description'|trans, {'label_attr': {'class' : 'uk-form-label'}}) }}
+                                {{ form_widget(form.shortDescription, {'attr' : {'class': 'md-input'}}) }}
                             </div>
                             <div class="uk-form-row">
                                 {{ form_widget(form.description, { 'id': 'wysiwyg_ckeditor', 'attr' : { 'class' : 'md-input' } }) }}
@@ -20,18 +24,15 @@
             </div>
         </div>
         <div class="uk-width-xLarge-3-10 uk-width-large-3-10">
-
-            {{ render(controller('MediaBundle:Admin:embedFile', {'formData': form.picture, 'data': post is defined ? post.picture : null, 'type': 'picture', 'context': 'blog/post', 'multiple': false })) }}
-
         	<div class="md-card">
                 <div class="md-card-content">
                     <div class="uk-form-row">
-                        {{ form_label(form.category, null, {'label_attr': {'class' : 'uk-form-label'}}) }}
+                        {{ form_label(form.category, 'blog.post.form.category'|trans, {'label_attr': {'class' : 'uk-form-label'}}) }}
                         {{ form_widget(form.category, {'attr': {'data-md-selectize' : true}}) }}
                     </div>
 
                     <div class="uk-form-row">
-                        {{ form_label(form.tags, null, {'label_attr': {'class' : 'uk-form-label'}}) }}
+                        {{ form_label(form.tags, 'blog.post.form.tags'|trans, {'label_attr': {'class' : 'uk-form-label'}}) }}
                         {% if post is defined and post.tags is not empty %}
                             {{ form_widget(form.tags, {'attr': {'data-role' : 'materialtags'}, 'value': post.tags|join(',')}) }}
                         {% else %}
@@ -42,22 +43,22 @@
                         <div class="uk-float-right">
                             {{ form_widget(form.visible, {'attr': {'data-switchery' : true}}) }}
                         </div>
-                        {{ form_label(form.visible, null, {'label_attr': {'class' : 'uk-form-label'}}) }}
+                        {{ form_label(form.visible, 'blog.post.form.visible'|trans, {'label_attr': {'class' : 'uk-form-label'}}) }}
                     </div>
                     <div class="uk-form-row">
                         <div class="uk-float-right">
                             {{ form_widget(form.enableComments, {'attr': {'data-switchery' : true}}) }}
                         </div>
-                        {{ form_label(form.enableComments, null, {'label_attr': {'class' : 'uk-form-label'}}) }}
+                        {{ form_label(form.enableComments, 'blog.post.form.enable_comments'|trans, {'label_attr': {'class' : 'uk-form-label'}}) }}
                     </div>
                     <div class="uk-form-row">
                         <div class="uk-float-right">
-                            {{ form_widget(form.flash, {'id': 'is_flash', 'attr': {'data-switchery' : true}}) }}
+                            {{ form_widget(form.flash, {'id': 'flash', 'attr': {'data-switchery' : true}}) }}
                         </div>
-                        {{ form_label(form.flash, null, {'label_attr': {'class' : 'uk-form-label'}}) }}
+                        {{ form_label(form.flash, 'blog.post.form.flash'|trans, {'label_attr': {'class' : 'uk-form-label'}}) }}
                     </div>
-                    <div class="uk-form-row">
-                        {{ form_label(form.flashExpiresAt, null, {'label_attr': {'class' : 'uk-form-label'}}) }}
+                    <div class="uk-form-row {% if post is not defined or post.flashExpiresAt is empty %}uk-hidden{% endif %}" id="flash-expires-at-row">
+                        {{ form_label(form.flashExpiresAt, 'blog.post.form.flash_expires_at'|trans, {'label_attr': {'class' : 'uk-form-label'}}) }}
                         {% if post is not defined or post.flashExpiresAt is empty %}
                             {{ form_widget(form.flashExpiresAt, {'attr': {'class': 'datepicker'}}) }}
                         {% else %}
@@ -66,19 +67,16 @@
                     </div>
                 </div>
             </div>
+            
+            {{ render(controller('MediaBundle:Admin:embedFile', {'formData': form.picture, 'data': post is defined ? post.picture : null, 'type': 'picture', 'context': 'blog/post', 'multiple': false })) }}
+            
         </div>
         <div class="uk-width-1-1 uk-text-center uk-margin-top">
-            <a class="md-btn md-btn-default" href="{{ url('admin_blog_post_list') }}">
-                <i class="fa fa-arrow-left"></i>
-                {{ 'button.cancel'|trans }}
+            <a class="md-btn md-btn-default" href="{{ post is defined ? url('puzzle_admin_blog_post_show', {'id': post.id}) : url('puzzle_admin_blog_post_list') }}">
+                {{ 'blog.post.form.cancel'|trans }}
             </a>
             <button class="md-btn md-btn-success" type="submit">
-                {% if post is defined %}
-                    {{ 'button.update'|trans }}
-                {% else %}
-                    {{ 'button.add'|trans }}
-                {% endif %}
-                <i class="fa fa-check"></i>
+                {{ post is defined ? 'blog.post.form.update'|trans : 'blog.post.form.create'|trans }}
             </button>
         </div>
     </div>

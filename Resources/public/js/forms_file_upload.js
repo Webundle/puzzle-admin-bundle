@@ -16,7 +16,7 @@ var altair_form_file_upload = {
         	$files_to_add = $("#files_to_add" + suffix),
         	url = Routing.generate('puzzle_admin_media_file_upload', {'context': $file_upload_context.val()}),
         	data =  $file_upload_select.attr('multiple') ? $files_to_add.val() : "";
-        	
+
         var $bar         = $('#progress_bar' + suffix),
             settings    = {
                 action: url, 
@@ -32,6 +32,27 @@ var altair_form_file_upload = {
                 complete: function(response,xhr) {
                     var obj = JSON.parse(response);
                     data = data == "" ? obj.id : data + ',' + obj.id;
+
+                    switch (obj.type) {
+                        case 'picture':
+                            var tpl = '<img src="' + obj.url +'" id="item_' + obj.id + '" class="preview">'; 
+                            break;
+                        case 'audio':
+                            var tpl = '<audio src="' + obj.url +'" controls id="item_' + obj.id + '" class="preview"></audio>';
+                            break;
+                        case 'video':
+                            var tpl = '<video src="' + obj.url +'" controls id="item_' + obj.id + '" class="preview"></video>';
+                            break;
+                        default:
+                            var tpl = '<embed src="' + obj.url +'" controls id="item_' + obj.id + '" class="preview"></embed>';
+                            break;
+                    }
+
+                    if ($file_upload_select.attr('multiple')) {
+                        $target_container.append(tpl);
+                    }else {
+                        $target_container.html(tpl);
+                    }
                 },
                 allcomplete: function(response,xhr) {
                     $bar.css("width", "100%").text("100%");
@@ -52,15 +73,20 @@ var altair_form_file_upload = {
                     // Show picture
                     var obj = JSON.parse(response);
                     var urls = obj.url.split(',');
-
+                    var ids = obj.id.split(',');
+                    var types = obj.type.split(',');
+                    console.log(obj.url.split(','));
                     // Show preview
-                    $target_container.removeClass("uk-hidden");
-                    $target_container.addClass("uk-display-block");
-                    $target_element.attr('src', urls[0]);
+                    $target_container.removeClass("uk-hidden")
+                                    .addClass("uk-display-block");
+
+                    // $target_element.attr('src', urls[0]);
 
                     // Count elements
-                    $('#item_count_container' + suffix).removeClass('uk-hidden');
-                    $('#item_count' + suffix).html(urls.length);
+                    // $('#item_count_container' + suffix).removeClass('uk-hidden');
+                    // $('#item_count' + suffix).html(urls.length);
+                    var width = 100 / parseInt(data.split(',').length);
+                    $target_container.find('.preview').css('width', width + '%');
 
                     // Hide modal
                     UIkit.modal("#choose_files_modal" + suffix).hide();

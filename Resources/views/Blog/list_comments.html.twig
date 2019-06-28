@@ -1,60 +1,202 @@
-<div class="uk-modal-dialog">
-    <div class="uk-modal-header">
-        <h3 class="uk-modal-title">Commentaires</h3>
-    </div>
-    <div>
-        <div class="uk-margin-large-bottom">
-            <ul class="uk-comment-list" id="list-comments" {# style="height:300px;overflow-y:auto" #}>
+{% trans_default_domain('blog') %}
 
-                {% for comment in comments %}
-                    <li id="{{ comment.id }}">
-                        <article class="uk-comment">
-                            <header class="uk-comment-header">
-                                <img class="md-user-image uk-comment-avatar" src="{{ comment.user.picture }}" alt="">
-                                <h4 class="uk-comment-title">{{ comment.user.firstName }} {{ comment.user.lastName }}</h4>
-                                <div class="uk-comment-meta">{{ comment.createdAt|date('d/m-Y H:i') }}</div>
-                            </header>
-                            <div class="uk-comment-body">
-                                <p>{{ comment.content }}</p>
+{% extends 'AdminBundle:Blog:layout.html.twig' %}
+
+{% block title %}{{ parent() }} - {{ "blog.comment.list.title"|trans|capitalize }}{% endblock %}
+
+{% block breadcrumbmodule %}
+    {{ parent() }}
+    <a href=" {{ url('puzzle_admin_blog_post_list') }} ">
+       {{ 'blog.post.list.title'|trans|capitalize }}
+    </a>
+    <i class="fa fa-chevron-right"></i>
+    <a href=" {{ url('puzzle_admin_blog_post_show', {'id': post.id}) }} ">
+       {{ 'blog.post.show.title'|trans|capitalize }}
+    </a>
+    <i class="fa fa-chevron-right"></i>
+	<em>{{ "blog.comment.list.title"|trans|capitalize }}</em>
+{% endblock %}
+
+{% block content %}
+<div id="page_content_inner">
+    <div class="md-card">
+        <div class="md-card-content">
+            <table id="dt_individual_search" class="uk-table uk-table-hover" cellspacing="0" width="100%">
+                <thead>
+                <tr>
+                    <th class="no-sort">
+                        {% if comments is not empty %}
+                            <div class="toggle-action uk-hidden">
+                                <select class="grouped-actions">
+                                    <option value="">{{ 'blog.comment.list.grouped_actions'|trans }}</option>
+                                    <option value="approve">{{ 'blog.comment.list.approve'|trans }}</option>
+                                    <option value="disapprove">{{ 'blog.comment.list.disapprove'|trans }}</option>
+                                    <option value="delete">{{ 'blog.comment.list.delete'|trans }}</option>
+                                </select>
+                                <input type="hidden" value="{{ comments|length|default('0') }}" id="toggle-items-count">
+                                <input type="hidden" value="0" id="toggle-items-checked-count">
                             </div>
-                        </article>
-                        <div class="uk-text-right">
-                            <a href="" class="thumb_up"><i class="material-icons">&#xE8DC;</i></a>
-                            <a href="" class="thumb_down"><i class="material-icons">&#xE8DB;</i></a>
-                        </div>
-                    </li>
-                {% endfor %}
-            </ul>
+                        {% endif %}
+                    </th>
+                    <th>{{ "blog.comment.list.author"|trans }}</th>
+                    <th>{{ "blog.comment.list.post"|trans }}</th>
+                    <th>{{ "blog.comment.list.visible"|trans }}</th>
+                    <th>{{ "blog.comment.list.created_at"|trans }}</th>
+                    <th>{{ "blog.comment.list.updated_at"|trans }}</th>
+                    <th class="uk-text-right no-sort">{{ 'blog.comment.list.actions'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for comment in comments %}
+                        <tr class="toggleable" id="item-{{ comment.id }}">
+                            <td>
+                                <a class="uk-text-muted uk-text-small uk-text-left toggleable-btn-select" href="#">
+                                    <i class="material-icons md-24 toggle-icon toggle-item" id="toggle-item-{{ comment.id }}">&#xE835;</i>
+                                </a>
+                            </td>
+                            <td>
+                            	<div class="uk-text-truncate" style="width: 250px;">
+                                    <a href="{{ url('puzzle_admin_blog_comment_show', {'id': comment.id}) }}">
+                                        {{ comment.createdBy }}
+                                    </a>
+                                </div>
+                            </td>
+                            <td>{{ comment.post.name }}</td>
+                            <td class="uk-text-center">
+                                {% if post.isVisible == 1 %}
+                                    <span class="uk-badge uk-badge-success">{{ 'blog.post.list.visible_yes'|trans }}</span>
+                                {% else %}
+                                    <span class="uk-badge">{{ 'blog.post.list.visible_no'|trans }}</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ date_time_ago(comment.createdAt) }}</td>
+                            <td>{{ date_time_ago(comment.updatedAt) }}</td>
+                            <td class="uk-text-right">
+                                <div class="uk-button-dropdown" data-uk-dropdown="{mode:'click', pos:'bottom-right'}">
+                                    <a><i class="fa fa-align-justify"></i></a>
+                                    <div class="uk-dropdown uk-dropdown-small uk-dropdown-bottom uk-text-left" aria-hidden="true">
+                                        <ul class="uk-nav uk-nav-dropdown">
+                                        	<li>
+                                                <a href="{{ url('puzzle_admin_blog_comment_show', {'id': comment.id}) }}" class="show-modal">
+                                                    <i class="fa fa-eye"></i>
+                                                    {{ 'blog.comment.list.show'|trans }}
+                                                </a>
+                                            </li>
+                                            {% if comment.visible == 1 %}
+                                                <li>
+                                                    <a href="{{ url('puzzle_admin_blog_comment_disapprove', {'id': comment.id}) }}" class="disapprove">
+                                                        <i class="fa fa-thumbs-down"></i>
+                                                        {{ 'blog.comment.list.approve'|trans }}
+                                                    </a>
+                                                </li>
+                                            {% else %}
+                                                <li>
+                                                    <a href="{{ url('puzzle_admin_blog_comment_disapprove', {'id': comment.id}) }}" class="approve">
+                                                        <i class="fa fa-thumbs-up"></i>
+                                                        {{ 'blog.comment.list.disapprove'|trans }}
+                                                    </a>
+                                                </li>
+                                            {% endif %}
+                                            <li>
+                                                <a href="#" data-route="{{ url('puzzle_admin_blog_comment_delete', {'id': comment.id}) }}" data-text="{{ 'blog.comment.delete.description'|trans({'%commentAuthor%': comment.createdBy}) }}" data-label="{{ comment.createdBy }}" class="remove-item">
+                                                    <i class="fa fa-trash-o uk-text-danger"></i>
+                                                    {{ 'blog.comment.list.delete'|trans }}
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
+{% endblock %}
 
-<script type="text/javascript">
-    $("#add-comment").click(function(e){
-        e.preventDefault();
-        
-        var content = $("#comment-content").val();
-        var url = $(this).attr('href');
-        var cardId = $("#card_id_comment").val();
+{% block javascripts %}
+	{{ parent() }}
+	<script>
+		$('body').on('change', '.grouped-actions', function(e){
+			switch($(this).val()){
+    			case 'approve':
+    				approve($(this), e);
+    				break;
+    			case 'disapprove':
+    				disapprove($(this), e);
+    				break;
+				case 'delete':
+					var modalId = 'delete-list-modal';
+					
+					UIkit.modal("#" + modalId).show();
+					$('#' + modalId).find('#delete-list-btn').data('delete-item-route', 'puzzle_admin_blog_comment_delete');
+				default:
+					break;
+			}
+		});
 
-        if(content != null){
+		$('body').on('click', '.disapprove', function(e){
+			disapprove($(this), e);
+		});
 
-            // Send the data using post
-            var posting = $.post(url, {content:content, card:cardId});
+		$('body').on('click', '.approve', function(e){
+			approve($(this), e);
+		});
 
-            // Put the results in a div
-            posting.done(function(data) {
+		/**
+		* Approve a comment
+		**/
+		function approve($el, e){
+			e.preventDefault();
+			$.ajax({
+	    		method: 'GET',
+	    		url: $el.attr('href'),
+				success: function(response, textSatus) {
+					UIkit.notify({
+	                    message: "<b>" + response + "</b>",
+	                    pos: 'top-right',
+	                    timeout: 2000,
+	                    status: 'success'
+	                });
+	    		},
+	    		error: function(jqXHR, textSatus, errorThrow) {
+	    			UIkit.notify({
+	                    message: "<b>" + jqXHR.responseText + "</b>",
+	                    pos: 'top-right',
+	                    timeout: 0,
+	                    status: 'error'
+	                });
+	    		}
+	    	})
+		}
 
-                var totalComments = $("#total-comments-card-" + cardId),
-                    totalCommentsData = parseInt(totalComments.html());
-
-                totalComments.html(totalCommentsData + 1);
-
-                $("#list-comments").append(data);
-            });
-
-            $("#comment-content").val("");
-        }
-    });
-
-</script>
+		/**
+		* Disapprove a comment
+		**/
+		function disapprove($el, e) {
+			e.preventDefault();
+			$.ajax({
+	    		method: 'GET',
+	    		url: $el.attr('href'),
+				success: function(response, textSatus) {
+					UIkit.notify({
+	                    message: "<b>" + response + "</b>",
+	                    pos: 'top-right',
+	                    timeout: 2000,
+	                    status: 'success'
+	                });
+	    		},
+	    		error: function(jqXHR, textSatus, errorThrow) {
+	    			UIkit.notify({
+	                    message: "<b>" + jqXHR.responseText + "</b>",
+	                    pos: 'top-right',
+	                    timeout: 0,
+	                    status: 'error'
+	                });
+	    		}
+	    	})
+		}
+	</script>
+{% endblock %}

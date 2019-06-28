@@ -1,5 +1,5 @@
 <div class="uk-modal-dialog">
-    <form class="uk-form-stacked" action="{{ url('blog_comment_update_callback', {'id': category.id })}}" method="POST">
+    <form class="uk-form-stacked" action="{{ url('learning_comment_update_callback', {'id': category.id })}}" method="POST">
         <div class="uk-margin-medium-bottom">
             <label for="name">Auteur</label>
             <input type="text" class="md-input" id="author" name="author" value="{{ comment.author }}" readonly />

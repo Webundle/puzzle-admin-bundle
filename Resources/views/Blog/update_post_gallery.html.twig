@@ -1,16 +1,20 @@
-{% trans_default_domain 'messages' %}
+{% trans_default_domain 'blog' %}
 
 {% extends 'AdminBundle:Blog:layout.html.twig' %}
 
-{% block title %}{{ parent() }} - {{ "blog.post.update"|trans|capitalize }} {% endblock %}
+{% block title %}{{ parent() }} - {{ "blog.post.update.title"|trans|capitalize }} {% endblock %}
 
 {% block breadcrumbmodule %}
     {{ parent() }}
-    <a href=" {{ url('admin_blog_post_list') }} ">
-       {{ 'blog.post.list'|trans|capitalize }}
+    <a href=" {{ url('puzzle_admin_blog_post_list') }} ">
+       {{ 'blog.post.list.title'|trans|capitalize }}
     </a>
     <i class="fa fa-chevron-right"></i>
-    <em>{{ "blog.post.update"|trans|capitalize }}</em>
+    <a href=" {{ url('puzzle_admin_blog_post_show', {'id': post.id}) }} ">
+       {{ 'blog.post.show.title'|trans|capitalize }}
+    </a>
+    <i class="fa fa-chevron-right"></i>
+    <em>{{ "blog.post.manage_gallery.title"|trans|capitalize }}</em>
 {% endblock %}
 
 {% block content %}
@@ -31,10 +35,10 @@
 	                                <a href="{{ picture }}" class="selector_files_from_media multiple-select">
 	                                    <img src="{{ picture }}" id="item_{{ key }}">
 	                                </a>
-	                                <div class="gallery_grid_image_caption" style="height:40px">
+	                                <div class="gallery_grid_image_caption" style="height:20px">
 	                                    <div class="gallery_grid_image_menu" data-uk-dropdown="{pos:'top-right'}">
 	                                    	<a class="uk-text-muted uk-text-small uk-text-left toggleable-btn-select uk-text-danger" href="#">
-	                                    		<span>{{ 'button.remove'|trans }}</span>
+	                                    		<span>{{ 'blog.post.manage_gallery.delete'|trans }}</span>
 	                                            <i class="material-icons md-24 toggle-icon toggle-item" id="toggle-item-{{ picture }}">&#xE835;</i>
 	                                        </a>
 	                                	</div>
@@ -46,13 +50,11 @@
 	            </div>
 	        </div>
 		    <div class="uk-text-center uk-margin-large-top">
-		        <a class="md-btn md-btn-default" href="{{ url('admin_blog_post_list') }}">
-		            <i class="fa fa-arrow-left"></i>
-		            {{ 'button.cancel'|trans }}
+		        <a class="md-btn md-btn-default" href="{{ url('puzzle_admin_blog_post_show', {'id': post.id}) }}">
+		            {{ 'blog.post.manage_gallery.cancel'|trans }}
 		        </a>
 		        <button class="md-btn md-btn-success" type="submit">
-		                {{ 'button.update'|trans }}
-		            <i class="fa fa-check"></i>
+		                {{ 'blog.post.manage_gallery.update'|trans }}
 		        </button>
 		    </div>
 		{{ form_end(form) }}

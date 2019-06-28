@@ -12808,3 +12808,21 @@ body {
 .menu_icon .fa {
   font-size: 1.3rem;
 }
+.chip {
+	background: #3c75c9 !important;
+	color: white !important;
+	padding: 0 0.3rem !important;
+	border-radius: 2px !important;
+	margin-top: 10px !important;
+	margin-right: 3px;
+}
+
+.chip i.material-icons {
+	float: none !important;
+	line-height: 0px !important;
+	height: 0.2px !important;
+	color: white !important;
+}
+
+
+
